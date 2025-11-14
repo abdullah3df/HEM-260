@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HE Cut Pro v4 — قص الجناح العلوي والسفلي</title>
+  <title>HE Cut Pro v5 — قص الجناح العلوي والسفلي</title>
 
   <!-- Tailwind عبر CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -66,10 +66,10 @@
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <div>
         <h1 class="text-xl sm:text-2xl font-bold tracking-tight">
-          HE Cut Pro <span class="text-sky-400 text-base align-middle">v4</span>
+          HE Cut Pro <span class="text-sky-400 text-base align-middle">v5</span>
         </h1>
         <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
-          قص الجناح العلوي والسفلي لمقاطع HEA / HEB / HEM — من الزاوية إلى القص أو من القص إلى الزاوية
+          قص الجناح العلوي والسفلي لمقاطع HEA / HEB / HEM — من الزاوية إلى القص أو من القص إلى الزاوية + حساب الباقي من الجناح
         </p>
       </div>
       <div class="text-[10px] sm:text-xs text-slate-300 text-left leading-snug" id="modeLabel">
@@ -91,7 +91,7 @@
           الإعدادات &amp; الحساب (علوي + سفلي)
         </h2>
         <span class="text-[11px] text-slate-400 hidden sm:inline">
-          غيّر الزاوية لتحصل على القص، أو غيّر القص لتحسب الزاوية الناتجة
+          غيّر الزاوية لتحصل على القص، أو غيّر القص لتحسب الزاوية الناتجة، مع اختيار قص جناح واحد أو جناحين
         </span>
       </div>
 
@@ -116,11 +116,34 @@
         <select id="size"
                 class="col-span-2 rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-400"></select>
 
+        <!-- اختيار الجناح المراد قصّه -->
+        <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
+          أي الأجنحة سيتم قصّها؟
+          <span class="text-[10px] text-slate-400">يؤثر على توزيع القص والرسم</span>
+        </label>
+        <div class="col-span-2 flex flex-wrap gap-3 text-xs text-slate-200">
+          <label class="inline-flex items-center gap-1">
+            <input type="radio" name="cutWings" value="both" checked
+                   class="text-sky-400 focus:ring-sky-500">
+            <span>الجناحان (علوي + سفلي)</span>
+          </label>
+          <label class="inline-flex items-center gap-1">
+            <input type="radio" name="cutWings" value="top"
+                   class="text-sky-400 focus:ring-sky-500">
+            <span>الجناح العلوي فقط</span>
+          </label>
+          <label class="inline-flex items-center gap-1">
+            <input type="radio" name="cutWings" value="bottom"
+                   class="text-sky-400 focus:ring-sky-500">
+            <span>الجناح السفلي فقط</span>
+          </label>
+        </div>
+
         <!-- زاوية التجميع -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
           زاوية التجميع θ (درجة)
           <span class="text-[10px] text-slate-400">
-            إذا غيّرت الزاوية → يتم حساب القص تلقائيًا
+            إذا غيّرت الزاوية → يتم حساب القص حسب اختيار الأجنحة
           </span>
         </label>
 
@@ -138,7 +161,7 @@
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
           قص الجناح (لكل قطعة) من الأعلى والأسفل (mm)
           <span class="text-[10px] text-slate-400">
-            إذا غيّرت هذه القيم → يتم حساب الزاوية الناتجة تلقائيًا
+            إذا غيّرت هذه القيم → يتم حساب الزاوية الناتجة تقريبياً
           </span>
         </label>
 
@@ -169,10 +192,10 @@
       </div>
 
       <p class="text-[11px] text-slate-400 mt-3 leading-relaxed">
-        <b>أمثلة الاستخدام:</b><br>
-        • تريد زاوية معيّنة (مثلاً 30°) → غيّر الزاوية فقط، وسيعطيك التطبيق مقدار القص العلوي والسفلي لكل قطعة.<br>
-        • عندك قص جاهز من الواقع (مثلاً علوي 50&nbsp;mm وسفلي 40&nbsp;mm) → أدخل هذه القيم،
-        وسيحسب التطبيق الزاوية الناتجة من الأعلى لكل جناح، ويعرضها في الجدول وعلى الرسم.
+        <b>ملاحظات:</b><br>
+        • عند العمل من الزاوية → يتم توزيع مقدار القص حسب اختيارك (علوي فقط، سفلي فقط، أو الجناحين).<br>
+        • التطبيق يحسب أيضًا <b>كم يتبقى من الجناح</b> بعد القص (عرض الجناح المتبقي لكل من العلوي والسفلي).<br>
+        • عند إدخال قيم مختلفة (مثلاً علوي 50&nbsp;mm وسفلي 40&nbsp;mm)، يتم حساب زوايا تقريبية لكل جناح، وزاوية متوسطة للتجميع.
       </p>
     </section>
 
@@ -217,7 +240,7 @@
   </main>
 
   <footer class="max-w-6xl mx-auto px-4 pb-6 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2">
-    <span>HE Cut Pro v4 — قص الجناح العلوي والسفلي (بدون وزن)</span>
+    <span>HE Cut Pro v5 — قص الجناح العلوي والسفلي (بدون وزن)</span>
     <span>للتنفيذ العملي: اعتمد دائمًا كتالوج المقاطع وتعليمات الورشة.</span>
   </footer>
 
@@ -255,9 +278,17 @@
     const $frontWrapper = document.getElementById('frontWrapper');
     const $btnReset = document.getElementById('btnReset');
     const $modeLabel = document.getElementById('modeLabel');
+    const $cutWingsRadios = document.querySelectorAll('input[name="cutWings"]');
 
     // mode: 'angle' = من الزاوية → القص, 'cuts' = من القص → الزاوية
     let mode = 'angle';
+    // cutMode: 'both' | 'top' | 'bottom'
+    let cutMode = 'both';
+
+    function getCutMode() {
+      const checked = document.querySelector('input[name="cutWings"]:checked');
+      return checked ? checked.value : 'both';
+    }
 
     function populateSizes() {
       const s = $series.value;
@@ -270,6 +301,8 @@
     function calc() {
       const s   = $series.value;
       const sz  = Number($size.value);
+      cutMode   = getCutMode();
+
       let angDeg= Number($angle.value);
       const data = HE_DATA[s][sz] || {b:180};
       const b    = data.b;
@@ -280,17 +313,25 @@
       if (isNaN(deltaBottom)) deltaBottom = 0;
 
       if (mode === 'angle') {
-        // من الزاوية → نحسب قص متساوي علوي/سفلي
+        // من الزاوية → نحسب القص حسب cutMode
         if (!isFinite(angDeg) || angDeg < 1) angDeg = 1;
         if (angDeg > 45) angDeg = 45;
         const theta = angDeg * Math.PI / 180;
         const deltaEachBase = b * Math.tan(theta) / 2;
         const deltaEach = deltaEachBase * CALIB;
-        deltaTop = deltaEach;
-        deltaBottom = deltaEach;
+
+        if (cutMode === 'both') {
+          deltaTop = deltaEach;
+          deltaBottom = deltaEach;
+        } else if (cutMode === 'top') {
+          deltaTop = deltaEach;
+          deltaBottom = 0;
+        } else if (cutMode === 'bottom') {
+          deltaTop = 0;
+          deltaBottom = deltaEach;
+        }
       } else {
         // من القص → نحسب زاوية تقريبية من Δ_top و Δ_bottom
-        // نحسب زاوية لكل جناح ثم نأخذ المتوسط
         let sumTheta = 0;
         let count = 0;
         let thetaTop = 0, thetaBottom = 0;
@@ -324,27 +365,41 @@
       const thetaBottom = deltaBottom > 0.0001 ? Math.atan((deltaBottom / CALIB) * 2 / b) : 0;
       const angleTopDeg = thetaTop * 180 / Math.PI;
       const angleBottomDeg = thetaBottom * 180 / Math.PI;
+      const remainingTop = Math.max(b - deltaTop, 0);
+      const remainingBottom = Math.max(b - deltaBottom, 0);
 
       renderReadout({
         s, sz, b, angDeg,
         deltaTop, deltaBottom,
         angleTopDeg, angleBottomDeg,
-        mode
+        remainingTop, remainingBottom,
+        mode, cutMode
       });
-      renderFront({b, sz, s, angDeg, deltaTop, deltaBottom});
+      renderFront({b, sz, s, angDeg, deltaTop, deltaBottom, cutMode});
       updateModeLabel();
     }
 
     function updateModeLabel() {
       if (mode === 'angle') {
-        $modeLabel.textContent = 'وضع الحساب: من الزاوية → القص (علوي وسفلي متساويين)';
+        $modeLabel.textContent = 'وضع الحساب: من الزاوية → القص (يتم توزيع القص حسب اختيار الأجنحة)';
       } else {
         $modeLabel.textContent = 'وضع الحساب: من القص → الزاوية (حسب Δ العلوي والسفلي التي أدخلتها)';
       }
     }
 
-    function renderReadout({s, sz, b, angDeg, deltaTop, deltaBottom, angleTopDeg, angleBottomDeg, mode}) {
+    function renderReadout({
+      s, sz, b, angDeg,
+      deltaTop, deltaBottom,
+      angleTopDeg, angleBottomDeg,
+      remainingTop, remainingBottom,
+      mode, cutMode
+    }) {
       const avgAngle = (angleTopDeg + angleBottomDeg) / 2 || 0;
+
+      const cutModeText =
+        cutMode === 'both'   ? 'الجناحان (علوي + سفلي)' :
+        cutMode === 'top'    ? 'الجناح العلوي فقط' :
+                               'الجناح السفلي فقط';
 
       $readout.innerHTML = `
         <div class="text-sky-300 text-xs mb-1">ملخص الحساب</div>
@@ -355,6 +410,9 @@
           <div>عرض الجناح b (تقريبي):</div>
           <div class="text-right"><b>${b.toFixed(0)} mm</b></div>
 
+          <div>الأجنحة التي يتم قصّها:</div>
+          <div class="text-right"><b>${cutModeText}</b></div>
+
           <div>زاوية الإدخال/الناتجة θ (متوسطة):</div>
           <div class="text-right"><b>${angDeg.toFixed(2)}°</b></div>
 
@@ -364,7 +422,13 @@
           <div>قص الجناح السفلي لكل قطعة (Δ<sub>bottom</sub>):</div>
           <div class="text-right text-emerald-300"><b>${deltaBottom.toFixed(2)} mm</b></div>
 
-          <div>زاوية تقريبة من القص العلوي:</div>
+          <div>العرض المتبقي في الجناح العلوي بعد القص:</div>
+          <div class="text-right text-amber-300"><b>${remainingTop.toFixed(2)} mm</b></div>
+
+          <div>العرض المتبقي في الجناح السفلي بعد القص:</div>
+          <div class="text-right text-amber-300"><b>${remainingBottom.toFixed(2)} mm</b></div>
+
+          <div>زاوية تقريبية من القص العلوي:</div>
           <div class="text-right"><b>${angleTopDeg.toFixed(2)}°</b></div>
 
           <div>زاوية تقريبية من القص السفلي:</div>
@@ -375,17 +439,17 @@
         </div>
         <div class="text-[10px] text-slate-400 mt-2">
           ${mode === 'angle'
-            ? 'أنت الآن تعمل من الزاوية نحو القص: غيّر θ وسيتم توزيع نفس مقدار القص على الجناح العلوي والسفلي.'
-            : 'أنت الآن تعمل من القص نحو الزاوية: غيّر Δ العلوي و/أو السفلي، وسيتم حساب الزوايا الناتجة لكل جناح.'}
+            ? 'أنت الآن تعمل من الزاوية نحو القص: غيّر θ وسيتم حساب مقدار القص على الجناح/الأجنحة المختارة، مع حساب العرض المتبقي لكل جناح.'
+            : 'أنت الآن تعمل من القص نحو الزاوية: غيّر Δ العلوي و/أو السفلي، وسيتم حساب الزوايا الناتجة تقريبياً، مع إظهار كم يتبقى من عرض كل جناح بعد القص.'}
           <br>
-          مثال عملي: لو أدخلت Δ<sub>top</sub> = 50 mm و Δ<sub>bottom</sub> = 40 mm، يتم حساب زاوية تقريبية لكل واحد،
-          ويمكنك استخدام الزاوية المتوسطة لتقريب زاوية التجميع الفعلية بعد لحام القطعتين.
+          مثال: لو قصصت من الجناح العلوي 50&nbsp;mm ومن السفلي 40&nbsp;mm، سيظهر لك التطبيق كم تبقى من كل جناح (b - Δ)
+          والزوايا التقريبية الناتجة من هذا القص.
         </div>
       `;
     }
 
     // رسم وجه أمامي لمقطع H مع خطي قص (علوي + سفلي)
-    function renderFront({b, sz, s, angDeg, deltaTop, deltaBottom}) {
+    function renderFront({b, sz, s, angDeg, deltaTop, deltaBottom, cutMode}) {
       const widthPx  = 320;
       const heightPx = 260;
       const paddingY = 30;
@@ -419,6 +483,9 @@
 
       const cutXTop = flangeRightInner - fracTop * flangeWidthPx;
       const cutXBottom = flangeRightInner - fracBottom * flangeWidthPx;
+
+      const showTopLine = (cutMode === 'both' || cutMode === 'top') && deltaTop > 0.0001;
+      const showBottomLine = (cutMode === 'both' || cutMode === 'bottom') && deltaBottom > 0.0001;
 
       const svg = `
         <svg width="${widthPx}" height="${heightPx}" viewBox="0 0 ${widthPx} ${heightPx}">
@@ -458,15 +525,19 @@
                   fill="url(#webGrad)" stroke="#94a3b8" stroke-width="1" />
           </g>
 
+          ${showTopLine ? `
           <!-- خط القص العلوي -->
           <line x1="${cutXTop}" y1="${topFlangeY}"
                 x2="${cutXTop}" y2="${topFlangeY + flangeTh}"
                 stroke="#f97373" stroke-width="4" stroke-linecap="round" />
+          ` : ''}
 
+          ${showBottomLine ? `
           <!-- خط القص السفلي -->
           <line x1="${cutXBottom}" y1="${botFlangeY - flangeTh}"
                 x2="${cutXBottom}" y2="${botFlangeY}"
                 stroke="#f97373" stroke-width="4" stroke-linecap="round" />
+          ` : ''}
 
           <!-- عنوان المقطع -->
           <text x="${midX}" y="${topFlangeY - 12}"
@@ -481,7 +552,7 @@
           </text>
 
           <text x="${midX}" y="${botFlangeY + 34}" font-size="10" fill="#cbd5f5" text-anchor="middle">
-            موضع الخطين الأحمرين يوضح تقريبًا مقدار القص من الجناح العلوي والسفلي
+            الخطوط الحمراء تمثّل تقريبياً نهاية الأجزاء المقطوعة من الأجنحة المختارة
           </text>
         </svg>
       `;
@@ -516,6 +587,14 @@
       calc();
     });
 
+    $cutWingsRadios.forEach(r => {
+      r.addEventListener('change', () => {
+        // عند تغيير الأجنحة، نعتبر أننا نعمل من الزاوية → نعيد توزيع القص
+        mode = 'angle';
+        calc();
+      });
+    });
+
     $btnReset.addEventListener('click', () => {
       mode = 'angle';
       $series.value = 'HEB';
@@ -525,6 +604,8 @@
       $angleRange.value = 30;
       $deltaTop.value = 0;
       $deltaBottom.value = 0;
+      // إعادة اختيار الجناحين
+      document.querySelector('input[name="cutWings"][value="both"]').checked = true;
       calc();
     });
 
