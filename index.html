@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HE Cut Pro v5 — قص الجناح العلوي والسفلي</title>
+  <title>HE Cut Pro v7 — قص الجناح العلوي والسفلي</title>
 
   <!-- Tailwind عبر CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -66,7 +66,7 @@
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <div>
         <h1 class="text-xl sm:text-2xl font-bold tracking-tight">
-          HE Cut Pro <span class="text-sky-400 text-base align-middle">v5</span>
+          HE Cut Pro <span class="text-sky-400 text-base align-middle">v7</span>
         </h1>
         <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
           قص الجناح العلوي والسفلي لمقاطع HEA / HEB / HEM — من الزاوية إلى القص أو من القص إلى الزاوية + حساب الباقي من الجناح
@@ -177,6 +177,44 @@
                    class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-400" />
           </div>
         </div>
+
+        <!-- زاوية ميلان خط القص في الرسم -->
+        <label class="col-span-2 text-slate-300 flex items-center justify-between mt-2">
+          زاوية ميلان خط القص في الرسم (من العمودي)
+          <span class="text-[10px] text-slate-400">
+            0° = خط عمودي، 30° أو أكثر = خط مائل (للتمثيل البصري فقط)
+          </span>
+        </label>
+
+        <!-- ميلان علوي -->
+        <div class="col-span-2">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>زاوية ميلان خط القص العلوي (α<sub>top</sub>)</span>
+          </div>
+          <div class="flex items-center gap-3 mt-1">
+            <input id="alphaTopRange" type="range" min="0" max="60" step="1" value="0" />
+            <div class="flex items-center gap-1 text-xs text-slate-200">
+              <input id="alphaTop" type="number" min="0" max="60" step="1" value="0"
+                    class="w-14 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-400 text-center" />
+              <span>°</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ميلان سفلي -->
+        <div class="col-span-2">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>زاوية ميلان خط القص السفلي (α<sub>bottom</sub>)</span>
+          </div>
+          <div class="flex items-center gap-3 mt-1">
+            <input id="alphaBottomRange" type="range" min="0" max="60" step="1" value="0" />
+            <div class="flex items-center gap-1 text-xs text-slate-200">
+              <input id="alphaBottom" type="number" min="0" max="60" step="1" value="0"
+                    class="w-14 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-sky-400 text-center" />
+              <span>°</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- نتائج نصية -->
@@ -187,15 +225,15 @@
       <div class="mt-4 flex flex-wrap gap-2">
         <button id="btnReset"
                 class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm border border-slate-600">
-          إعادة الضبط (HEB 180 / θ=30° / قص 0 mm)
+          إعادة الضبط (HEB 180 / θ=30° / قص 0 mm / ميلان 0°)
         </button>
       </div>
 
       <p class="text-[11px] text-slate-400 mt-3 leading-relaxed">
         <b>ملاحظات:</b><br>
-        • عند العمل من الزاوية → يتم توزيع مقدار القص حسب اختيارك (علوي فقط، سفلي فقط، أو الجناحين).<br>
-        • التطبيق يحسب أيضًا <b>كم يتبقى من الجناح</b> بعد القص (عرض الجناح المتبقي لكل من العلوي والسفلي).<br>
-        • عند إدخال قيم مختلفة (مثلاً علوي 50&nbsp;mm وسفلي 40&nbsp;mm)، يتم حساب زوايا تقريبية لكل جناح، وزاوية متوسطة للتجميع.
+        • عند العمل من الزاوية θ → يتم توزيع مقدار القص Δ حسب اختيارك (علوي فقط، سفلي فقط، أو الجناحين).<br>
+        • زاوية ميلان خط القص α<sub>top</sub> و α<sub>bottom</sub> تتحكم فقط في <b>شكل الخط الأحمر في الرسم</b> لتمثيل طريقة الجمع، ولا تغيّر القيم الهندسية للقص.<br>
+        • الوجه الأمامي والخلفي للقطعة مفهومان هنا أن لهما نفس شكل القص.
       </p>
     </section>
 
@@ -209,7 +247,7 @@
           الوجه الأمامي للمقطع — عرض بصري مع خطي القص
         </h2>
         <span class="text-[11px] text-slate-400 hidden sm:inline">
-          الجناحان (علوي/سفلي)، العمود (web)، وخطان أحمران يتحركان حسب مقدار القص من كل جناح
+          الجناحان (علوي/سفلي)، العمود (web)، وخطان أحمران (عمودية أو مائلة) حسب α<sub>top</sub> و α<sub>bottom</sub>
         </span>
       </div>
 
@@ -228,7 +266,7 @@
         </div>
         <div class="flex items-center gap-2">
           <span class="inline-block h-3 w-3 rounded-sm bg-red-500"></span>
-          خطوط القص العمودية (أعلى وأسفل) تتحرك باتجاه الوسط كلما زاد القص
+          خطوط القص (عمودية أو مائلة) حسب α<sub>top</sub> و α<sub>bottom</sub>
         </div>
         <div class="flex items-center gap-2">
           <span class="inline-block h-3 w-3 rounded-full border border-sky-400"></span>
@@ -240,7 +278,7 @@
   </main>
 
   <footer class="max-w-6xl mx-auto px-4 pb-6 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2">
-    <span>HE Cut Pro v5 — قص الجناح العلوي والسفلي (بدون وزن)</span>
+    <span>HE Cut Pro v7 — قص الجناح العلوي والسفلي (بدون وزن)</span>
     <span>للتنفيذ العملي: اعتمد دائمًا كتالوج المقاطع وتعليمات الورشة.</span>
   </footer>
 
@@ -274,6 +312,10 @@
     const $angleRange = document.getElementById('angleRange');
     const $deltaTop = document.getElementById('deltaTop');
     const $deltaBottom = document.getElementById('deltaBottom');
+    const $alphaTop = document.getElementById('alphaTop');
+    const $alphaTopRange = document.getElementById('alphaTopRange');
+    const $alphaBottom = document.getElementById('alphaBottom');
+    const $alphaBottomRange = document.getElementById('alphaBottomRange');
     const $readout= document.getElementById('readout');
     const $frontWrapper = document.getElementById('frontWrapper');
     const $btnReset = document.getElementById('btnReset');
@@ -311,6 +353,18 @@
       let deltaBottom = Number($deltaBottom.value);
       if (isNaN(deltaTop)) deltaTop = 0;
       if (isNaN(deltaBottom)) deltaBottom = 0;
+
+      // قيم ميلان الخط في الرسم
+      let alphaTopDeg = Number($alphaTop.value);
+      let alphaBottomDeg = Number($alphaBottom.value);
+      if (isNaN(alphaTopDeg)) alphaTopDeg = 0;
+      if (isNaN(alphaBottomDeg)) alphaBottomDeg = 0;
+      alphaTopDeg = Math.max(0, Math.min(60, alphaTopDeg));
+      alphaBottomDeg = Math.max(0, Math.min(60, alphaBottomDeg));
+      $alphaTop.value = alphaTopDeg.toFixed(0);
+      $alphaTopRange.value = alphaTopDeg;
+      $alphaBottom.value = alphaBottomDeg.toFixed(0);
+      $alphaBottomRange.value = alphaBottomDeg;
 
       if (mode === 'angle') {
         // من الزاوية → نحسب القص حسب cutMode
@@ -360,7 +414,7 @@
       $deltaTop.value = deltaTop.toFixed(2);
       $deltaBottom.value = deltaBottom.toFixed(2);
 
-      // حساب الزوايا لكل جناح للعرض
+      // حساب الزوايا لكل جناح للعرض (من مقدار القص)
       const thetaTop = deltaTop > 0.0001 ? Math.atan((deltaTop / CALIB) * 2 / b) : 0;
       const thetaBottom = deltaBottom > 0.0001 ? Math.atan((deltaBottom / CALIB) * 2 / b) : 0;
       const angleTopDeg = thetaTop * 180 / Math.PI;
@@ -373,9 +427,15 @@
         deltaTop, deltaBottom,
         angleTopDeg, angleBottomDeg,
         remainingTop, remainingBottom,
+        alphaTopDeg, alphaBottomDeg,
         mode, cutMode
       });
-      renderFront({b, sz, s, angDeg, deltaTop, deltaBottom, cutMode});
+      renderFront({
+        b, sz, s, angDeg,
+        deltaTop, deltaBottom,
+        cutMode,
+        alphaTopDeg, alphaBottomDeg
+      });
       updateModeLabel();
     }
 
@@ -392,6 +452,7 @@
       deltaTop, deltaBottom,
       angleTopDeg, angleBottomDeg,
       remainingTop, remainingBottom,
+      alphaTopDeg, alphaBottomDeg,
       mode, cutMode
     }) {
       const avgAngle = (angleTopDeg + angleBottomDeg) / 2 || 0;
@@ -428,28 +489,38 @@
           <div>العرض المتبقي في الجناح السفلي بعد القص:</div>
           <div class="text-right text-amber-300"><b>${remainingBottom.toFixed(2)} mm</b></div>
 
-          <div>زاوية تقريبية من القص العلوي:</div>
+          <div>زاوية تقريبية من القص العلوي (حسابية):</div>
           <div class="text-right"><b>${angleTopDeg.toFixed(2)}°</b></div>
 
-          <div>زاوية تقريبية من القص السفلي:</div>
+          <div>زاوية تقريبية من القص السفلي (حسابية):</div>
           <div class="text-right"><b>${angleBottomDeg.toFixed(2)}°</b></div>
 
           <div>زاوية متوسطة بين العلوي والسفلي:</div>
           <div class="text-right text-sky-300"><b>${avgAngle.toFixed(2)}°</b></div>
+
+          <div>زاوية ميلان خط القص العلوي في الرسم (α<sub>top</sub>):</div>
+          <div class="text-right"><b>${alphaTopDeg.toFixed(0)}°</b></div>
+
+          <div>زاوية ميلان خط القص السفلي في الرسم (α<sub>bottom</sub>):</div>
+          <div class="text-right"><b>${alphaBottomDeg.toFixed(0)}°</b></div>
         </div>
         <div class="text-[10px] text-slate-400 mt-2">
           ${mode === 'angle'
             ? 'أنت الآن تعمل من الزاوية نحو القص: غيّر θ وسيتم حساب مقدار القص على الجناح/الأجنحة المختارة، مع حساب العرض المتبقي لكل جناح.'
             : 'أنت الآن تعمل من القص نحو الزاوية: غيّر Δ العلوي و/أو السفلي، وسيتم حساب الزوايا الناتجة تقريبياً، مع إظهار كم يتبقى من عرض كل جناح بعد القص.'}
           <br>
-          مثال: لو قصصت من الجناح العلوي 50&nbsp;mm ومن السفلي 40&nbsp;mm، سيظهر لك التطبيق كم تبقى من كل جناح (b - Δ)
-          والزوايا التقريبية الناتجة من هذا القص.
+          الزوايا α<sub>top</sub> و α<sub>bottom</sub> خاصة فقط بشكل الخط في الرسم، لتوضيح اتجاه وجه القص عند جمع القطعتين (لا تغيّر الحسابات الهندسية).
         </div>
       `;
     }
 
     // رسم وجه أمامي لمقطع H مع خطي قص (علوي + سفلي)
-    function renderFront({b, sz, s, angDeg, deltaTop, deltaBottom, cutMode}) {
+    function renderFront({
+      b, sz, s, angDeg,
+      deltaTop, deltaBottom,
+      cutMode,
+      alphaTopDeg, alphaBottomDeg
+    }) {
       const widthPx  = 320;
       const heightPx = 260;
       const paddingY = 30;
@@ -486,6 +557,13 @@
 
       const showTopLine = (cutMode === 'both' || cutMode === 'top') && deltaTop > 0.0001;
       const showBottomLine = (cutMode === 'both' || cutMode === 'bottom') && deltaBottom > 0.0001;
+
+      // ميلان خط القص في الرسم (من العمودي)
+      const phiTopRad = alphaTopDeg * Math.PI / 180;
+      const phiBottomRad = alphaBottomDeg * Math.PI / 180;
+
+      const dxTopTilt = Math.tan(phiTopRad) * flangeTh;
+      const dxBottomTilt = Math.tan(phiBottomRad) * flangeTh;
 
       const svg = `
         <svg width="${widthPx}" height="${heightPx}" viewBox="0 0 ${widthPx} ${heightPx}">
@@ -525,19 +603,29 @@
                   fill="url(#webGrad)" stroke="#94a3b8" stroke-width="1" />
           </g>
 
-          ${showTopLine ? `
-          <!-- خط القص العلوي -->
-          <line x1="${cutXTop}" y1="${topFlangeY}"
-                x2="${cutXTop}" y2="${topFlangeY + flangeTh}"
-                stroke="#f97373" stroke-width="4" stroke-linecap="round" />
-          ` : ''}
+          ${showTopLine ? (() => {
+            const x1 = cutXTop;
+            const y1 = topFlangeY;
+            const x2 = cutXTop - dxTopTilt;
+            const y2 = topFlangeY + flangeTh;
+            return `
+              <line x1="${x1}" y1="${y1}"
+                    x2="${x2}" y2="${y2}"
+                    stroke="#f97373" stroke-width="4" stroke-linecap="round" />
+            `;
+          })() : ''}
 
-          ${showBottomLine ? `
-          <!-- خط القص السفلي -->
-          <line x1="${cutXBottom}" y1="${botFlangeY - flangeTh}"
-                x2="${cutXBottom}" y2="${botFlangeY}"
-                stroke="#f97373" stroke-width="4" stroke-linecap="round" />
-          ` : ''}
+          ${showBottomLine ? (() => {
+            const x1 = cutXBottom;
+            const y1 = botFlangeY - flangeTh;
+            const x2 = cutXBottom - dxBottomTilt;
+            const y2 = botFlangeY;
+            return `
+              <line x1="${x1}" y1="${y1}"
+                    x2="${x2}" y2="${y2}"
+                    stroke="#f97373" stroke-width="4" stroke-linecap="round" />
+            `;
+          })() : ''}
 
           <!-- عنوان المقطع -->
           <text x="${midX}" y="${topFlangeY - 12}"
@@ -552,7 +640,7 @@
           </text>
 
           <text x="${midX}" y="${botFlangeY + 34}" font-size="10" fill="#cbd5f5" text-anchor="middle">
-            الخطوط الحمراء تمثّل تقريبياً نهاية الأجزاء المقطوعة من الأجنحة المختارة
+            موضع وشكل الخطوط الحمراء تمثيل تقريبي لاتجاه ونهاية القص في الأجنحة المختارة (الوجه الأمامي = الخلفي).
           </text>
         </svg>
       `;
@@ -587,9 +675,25 @@
       calc();
     });
 
+    $alphaTop.addEventListener('input', () => {
+      // لا يغيّر وضع الحساب، فقط شكل الرسم
+      calc();
+    });
+    $alphaTopRange.addEventListener('input', () => {
+      $alphaTop.value = $alphaTopRange.value;
+      calc();
+    });
+
+    $alphaBottom.addEventListener('input', () => {
+      calc();
+    });
+    $alphaBottomRange.addEventListener('input', () => {
+      $alphaBottom.value = $alphaBottomRange.value;
+      calc();
+    });
+
     $cutWingsRadios.forEach(r => {
       r.addEventListener('change', () => {
-        // عند تغيير الأجنحة، نعتبر أننا نعمل من الزاوية → نعيد توزيع القص
         mode = 'angle';
         calc();
       });
@@ -604,7 +708,10 @@
       $angleRange.value = 30;
       $deltaTop.value = 0;
       $deltaBottom.value = 0;
-      // إعادة اختيار الجناحين
+      $alphaTop.value = 0;
+      $alphaTopRange.value = 0;
+      $alphaBottom.value = 0;
+      $alphaBottomRange.value = 0;
       document.querySelector('input[name="cutWings"][value="both"]').checked = true;
       calc();
     });
