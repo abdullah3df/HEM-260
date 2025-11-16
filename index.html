@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>HE Cut Pro v10.2 — Multi-Lang + Theme</title>
+  <title>HE Cut Pro v10.3 — Multi-Lang + Theme</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
@@ -108,6 +108,15 @@
       color:#0f172a;
       font-weight:700;
     }
+
+    .field-label-main{
+      font-weight:600;
+      font-size:0.9rem;
+    }
+    .field-label-sub{
+      font-size:0.7rem;
+      opacity:0.8;
+    }
   </style>
 </head>
 <body class="text-slate-100 theme-dark">
@@ -118,7 +127,7 @@
       <div>
         <h1 class="text-xl sm:text-2xl font-bold tracking-tight">
           <span data-i18n="appTitle">HE Cut Pro</span>
-          <span class="text-sky-400 text-base align-middle">v10.2</span>
+          <span class="text-sky-400 text-base align-middle">v10.3</span>
         </h1>
         <p class="text-xs sm:text-sm text-slate-400 mt-0.5" data-i18n="subtitle">
           قص الجناح العلوي والسفلي — زاوية تجميع من فرق القص + ميلان حر (تمثيلي)
@@ -155,9 +164,9 @@
 
       <div class="grid grid-cols-2 gap-3 text-sm">
         <!-- سلسلة -->
-        <label class="col-span-2 text-slate-300 flex items-center justify-between">
-          <span data-i18n="seriesLabel">سلسلة المقطع</span>
-          <span class="text-[10px] text-sky-300/80" data-i18n="seriesHint">HEA / HEB / HEM</span>
+        <label class="col-span-2 text-slate-300 flex flex-col gap-0.5">
+          <span class="field-label-main" data-i18n="seriesLabel">سلسلة المقطع</span>
+          <span class="field-label-sub text-sky-300/80" data-i18n="seriesHint">HEA / HEB / HEM</span>
         </label>
         <select id="series" class="col-span-2 rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-400">
           <option value="HEA">HEA</option>
@@ -166,16 +175,16 @@
         </select>
 
         <!-- مقاس -->
-        <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          <span data-i18n="sizeLabel">المقاس</span>
-          <span class="text-[10px] text-slate-400" data-i18n="sizeHint">HE 100 … HE 400</span>
+        <label class="col-span-2 text-slate-300 flex flex-col gap-0.5 mt-1">
+          <span class="field-label-main" data-i18n="sizeLabel">المقاس</span>
+          <span class="field-label-sub text-slate-400" data-i18n="sizeHint">HE 100 … HE 400</span>
         </label>
         <select id="size" class="col-span-2 rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-400"></select>
 
         <!-- اختيار الأجنحة -->
-        <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          <span data-i18n="cutWingsLabel">الأجنحة المراد اعتمادها عند حساب القص من الزاوية</span>
-          <span class="text-[10px] text-slate-400" data-i18n="cutWingsHint">الزاوية تعتمد على فرق القص بين العلوي والسفلي</span>
+        <label class="col-span-2 text-slate-300 flex flex-col gap-0.5 mt-1">
+          <span class="field-label-main" data-i18n="cutWingsLabel">الأجنحة المعتمدة في حساب القص من الزاوية</span>
+          <span class="field-label-sub text-slate-400" data-i18n="cutWingsHint">الزاوية تعتمد على فرق القص بين العلوي والسفلي</span>
         </label>
         <div class="col-span-2 flex flex-wrap gap-3 text-xs text-slate-200">
           <label class="inline-flex items-center gap-1">
@@ -189,14 +198,14 @@
           <label class="inline-flex items-center gap-1 cursor-help"
                  title="في وضع الزاوية: يعامل مثل قص على جناح واحد. في وضع إدخال القص: يمكنك إدخال قيم مختلفة للعلوي والسفلي، والزاوية تُحسب من الفرق بينهما.">
             <input type="radio" name="cutWings" value="both" class="text-sky-400 focus:ring-sky-500">
-            <span data-i18n="cutModeBoth">إدخال قص مستقل للجناحين</span>
+            <span data-i18n="cutModeBoth">قص مستقل للجناحين (إدخال يدوي)</span>
           </label>
         </div>
 
         <!-- زاوية التجميع -->
-        <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          <span data-i18n="angleLabel">زاوية التجميع المستهدفة بين قطعتين θ (درجة)</span>
-          <span class="text-[10px] text-slate-400" data-i18n="angleHint">تُستخدم فقط لحساب قص مقترح</span>
+        <label class="col-span-2 text-slate-300 flex flex-col gap-0.5 mt-1">
+          <span class="field-label-main" data-i18n="angleLabel">زاوية التجميع المستهدفة بين قطعتين θ (درجة)</span>
+          <span class="field-label-sub text-slate-400" data-i18n="angleHint">تُستخدم فقط لحساب قيمة قص مقترحة</span>
         </label>
         <div class="col-span-2 flex items-center gap-3">
           <input id="angleRange" type="range" min="1" max="45" step="0.5" value="30"/>
@@ -208,24 +217,24 @@
         </div>
 
         <!-- قص الجناحين -->
-        <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          <span data-i18n="deltaSectionLabel">قص الجناح (لكل قطعة قبل التجميع) mm</span>
+        <label class="col-span-2 text-slate-300 flex flex-col gap-0.5 mt-1">
+          <span class="field-label-main" data-i18n="deltaSectionLabel">قص الجناح (لكل قطعة قبل التجميع) mm</span>
         </label>
         <div class="col-span-2 grid grid-cols-2 gap-3">
           <div>
-            <div class="text-xs text-slate-400 mb-1" data-i18n="deltaTopLabel">Δ<sub>top</sub> — قص الجناح العلوي</div>
+            <div class="text-xs text-slate-400 mb-1" data-i18n="deltaTopLabel">قص الجناح العلوي</div>
             <div class="flex items-center gap-2 mb-1">
               <input id="deltaTop" type="number" min="0" step="0.1" value="0"
-                     class="w-20 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
+                     class="w-24 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
               <span class="text-[10px] text-slate-400">mm</span>
             </div>
             <input id="deltaTopRange" type="range" min="0" max="200" step="0.5" value="0"/>
           </div>
           <div>
-            <div class="text-xs text-slate-400 mb-1" data-i18n="deltaBottomLabel">Δ<sub>bottom</sub> — قص الجناح السفلي</div>
+            <div class="text-xs text-slate-400 mb-1" data-i18n="deltaBottomLabel">قص الجناح السفلي</div>
             <div class="flex items-center gap-2 mb-1">
               <input id="deltaBottom" type="number" min="0" step="0.1" value="0"
-                     class="w-20 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
+                     class="w-24 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
               <span class="text-[10px] text-slate-400">mm</span>
             </div>
             <input id="deltaBottomRange" type="range" min="0" max="200" step="0.5" value="0"/>
@@ -234,14 +243,14 @@
 
         <!-- ميلان حر لكل جناح -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-3">
-          <span data-i18n="slopeSectionLabel">ميلان خط القص في الرسم (من العمودي)</span>
-          <span class="text-[10px] text-amber-300" data-i18n="slopeSectionHint">حر لكل جناح (تمثيل بصري فقط)</span>
+          <span class="field-label-main" data-i18n="slopeSectionLabel">ميلان خط القص في الرسم (من العمودي)</span>
+          <span class="text-[10px] text-amber-300" data-i18n="slopeSectionHint">حر لكل جناح — تمثيل بصري فقط</span>
         </label>
 
         <!-- ميلان علوي -->
         <div class="col-span-2">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span data-i18n="alphaTopTitle">زاوية ميلان الخط العلوي (α<sub>top</sub>)</span>
+            <span data-i18n="alphaTopTitle">زاوية ميلان الخط العلوي</span>
             <span class="inline-flex items-center gap-1 text-[10px] text-sky-300/80 cursor-help"
                   title="0° = خط عمودي، قيم أكبر = خط مائل في الرسم فقط (لا تؤثر على الحساب الهندسي)">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -264,7 +273,7 @@
         <!-- ميلان سفلي -->
         <div class="col-span-2">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span data-i18n="alphaBottomTitle">زاوية ميلان الخط السفلي (α<sub>bottom</sub>)</span>
+            <span data-i18n="alphaBottomTitle">زاوية ميلان الخط السفلي</span>
             <span class="inline-flex items-center gap-1 text-[10px] text-sky-300/80 cursor-help"
                   title="0° = خط عمودي، قيم أكبر = خط مائل في الرسم فقط (لا تؤثر على الحساب الهندسي)">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -285,7 +294,7 @@
 
         <!-- اتجاه الميلان -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-2">
-          <span data-i18n="tiltDirSectionLabel">اتجاه الميلان (رسم فقط)</span>
+          <span class="field-label-main" data-i18n="tiltDirSectionLabel">اتجاه الميلان (رسم فقط)</span>
           <span class="text-[10px] text-slate-400" data-i18n="tiltDirSectionHint">لا يغيّر الحسابات</span>
         </label>
         <div class="col-span-2 grid grid-cols-2 gap-3 text-xs text-slate-200">
@@ -328,12 +337,8 @@
         </button>
       </div>
 
-      <p class="text-[11px] text-slate-400 mt-3 leading-relaxed" data-i18n="theoryText">
-        <b>الفكرة الهندسية:</b><br>
-        • زاوية التجميع بين قطعتين تعتمد على <b>الفرق</b> بين قص الجناح العلوي Δtop والسفلي Δbottom.<br>
-        • إذا كان Δtop = Δbottom ⇒ الفرق = 0 ⇒ الزاوية الناتجة ≈ 0° (القطعتان مستقيمتان بعد الجمع).<br>
-        • كلما زاد |Δtop − Δbottom| زادت زاوية التجميع بين القطعتين.<br>
-        • الزوايا α<sub>top</sub> و α<sub>bottom</sub> + اتجاه الميلان تتحكم فقط في شكل الخط الأحمر في الرسم ولا تغيّر الحسابات.
+      <p class="text-[11px] text-slate-400 mt-3 leading-relaxed" id="theoryTextContainer">
+        <!-- سيتم ملؤها بالترجمة من I18N -->
       </p>
     </section>
 
@@ -373,7 +378,7 @@
   </main>
 
   <footer class="max-w-6xl mx-auto px-4 pb-6 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2">
-    <span data-i18n="footerLeft">HE Cut Pro v10.2 — فرق القص بين الجناحين</span>
+    <span data-i18n="footerLeft">HE Cut Pro v10.3 — فرق القص بين الجناحين</span>
     <span data-i18n="footerRight">للتنفيذ العملي: اعتمد كتالوج المقاطع وتعليمات الورشة.</span>
   </footer>
 
@@ -390,20 +395,20 @@
         seriesHint: "HEA / HEB / HEM",
         sizeLabel: "المقاس",
         sizeHint: "HE 100 … HE 400",
-        cutWingsLabel: "الأجنحة المراد اعتمادها عند حساب القص من الزاوية",
+        cutWingsLabel: "الأجنحة المعتمدة في حساب القص من الزاوية",
         cutWingsHint: "الزاوية تعتمد على فرق القص بين العلوي والسفلي",
         cutModeTop: "قص على الجناح العلوي",
         cutModeBottom: "قص على الجناح السفلي",
-        cutModeBoth: "إدخال قص مستقل للجناحين",
+        cutModeBoth: "قص مستقل للجناحين (إدخال يدوي)",
         angleLabel: "زاوية التجميع المستهدفة بين قطعتين θ (درجة)",
-        angleHint: "تُستخدم فقط لحساب قص مقترح",
+        angleHint: "تُستخدم فقط لحساب قيمة قص مقترحة",
         deltaSectionLabel: "قص الجناح (لكل قطعة قبل التجميع) mm",
-        deltaTopLabel: "Δtop — قص الجناح العلوي",
-        deltaBottomLabel: "Δbottom — قص الجناح السفلي",
+        deltaTopLabel: "قص الجناح العلوي",
+        deltaBottomLabel: "قص الجناح السفلي",
         slopeSectionLabel: "ميلان خط القص في الرسم (من العمودي)",
-        slopeSectionHint: "حر لكل جناح (تمثيل بصري فقط)",
-        alphaTopTitle: "زاوية ميلان الخط العلوي (αtop)",
-        alphaBottomTitle: "زاوية ميلان الخط السفلي (αbottom)",
+        slopeSectionHint: "حر لكل جناح — تمثيل بصري فقط",
+        alphaTopTitle: "زاوية ميلان الخط العلوي",
+        alphaBottomTitle: "زاوية ميلان الخط السفلي",
         tiltDirSectionLabel: "اتجاه الميلان (رسم فقط)",
         tiltDirSectionHint: "لا يغيّر الحسابات",
         tiltTopLabel: "اتجاه ميلان العلوي",
@@ -416,14 +421,14 @@
         legendWeb: "العمود (web)",
         legendCuts: "خطوط القص (عمودية أو مائلة) حسب إعداداتك",
         legendNote: "الرسم تمثيلي — الأبعاد الرقمية هي المرجع",
-        footerLeft: "HE Cut Pro v10.2 — فرق القص بين الجناحين",
+        footerLeft: "HE Cut Pro v10.3 — فرق القص بين الجناحين",
         footerRight: "للتنفيذ العملي: اعتمد كتالوج المقاطع وتعليمات الورشة.",
         summaryTitle: "ملخص الحساب",
         profileLabel: "البروفايل",
         flangeWidthLabel: "عرض الجناح b (تقريبي)",
         cutModeDescTop: "قص على الجناح العلوي",
         cutModeDescBottom: "قص على الجناح السفلي",
-        cutModeDescBoth: "إدخال قص مستقل للجناحين (الزاوية من الفرق بينهم)",
+        cutModeDescBoth: "قص مستقل للجناحين (الزاوية من الفرق بينهما)",
         targetAngleLabel: "زاوية التجميع الهدف (من الشريط)",
         deltaTopLabelTable: "قص الجناح العلوي لكل قطعة (Δtop)",
         deltaBottomLabelTable: "قص الجناح السفلي لكل قطعة (Δbottom)",
@@ -439,7 +444,7 @@
         noteDiffZero: "إذا كان Δtop = Δbottom بالضبط ⇒ الفرق = 0 ⇒ الزاوية الناتجة من القص ≈ 0° حتى لو أدخلت زاوية في الشريط.",
         frontAnglePrefix: "θ ≈",
         frontAngleSuffix: "(الهدف)",
-        frontCaption: "خطوط القص تمثّل Δtop و Δbottom التي أدخلتها."
+        frontCaption: "خطوط القص تمثّل قيم Δtop و Δbottom التي أدخلتها."
       },
       en: {
         appTitle: "HE Cut Pro",
@@ -450,20 +455,20 @@
         seriesHint: "HEA / HEB / HEM",
         sizeLabel: "Size",
         sizeHint: "HE 100 … HE 400",
-        cutWingsLabel: "Which flanges to base the angle cut on",
-        cutWingsHint: "Angle depends on the difference between top & bottom cut",
+        cutWingsLabel: "Flanges used for angle-based cut",
+        cutWingsHint: "Angle depends on difference between top & bottom cut",
         cutModeTop: "Cut on top flange",
         cutModeBottom: "Cut on bottom flange",
-        cutModeBoth: "Independent cut input for both flanges",
+        cutModeBoth: "Independent cut per flange (manual input)",
         angleLabel: "Target assembly angle between two pieces θ (deg)",
-        angleHint: "Only used to propose a cut value",
+        angleHint: "Only used to suggest a cut value",
         deltaSectionLabel: "Flange cut (per piece before assembly) mm",
-        deltaTopLabel: "Δtop — cut of top flange",
-        deltaBottomLabel: "Δbottom — cut of bottom flange",
+        deltaTopLabel: "Top flange cut",
+        deltaBottomLabel: "Bottom flange cut",
         slopeSectionLabel: "Cut line tilt in drawing (from vertical)",
-        slopeSectionHint: "Free per flange (visual only)",
-        alphaTopTitle: "Tilt angle of top line (αtop)",
-        alphaBottomTitle: "Tilt angle of bottom line (αbottom)",
+        slopeSectionHint: "Free per flange — visual only",
+        alphaTopTitle: "Top line tilt angle",
+        alphaBottomTitle: "Bottom line tilt angle",
         tiltDirSectionLabel: "Tilt direction (drawing only)",
         tiltDirSectionHint: "Does not change the calculation",
         tiltTopLabel: "Top tilt direction",
@@ -476,7 +481,7 @@
         legendWeb: "Web",
         legendCuts: "Cut lines (vertical or tilted) as per your settings",
         legendNote: "Drawing is illustrative — numeric values are the reference",
-        footerLeft: "HE Cut Pro v10.2 — flange cut difference",
+        footerLeft: "HE Cut Pro v10.3 — flange cut difference",
         footerRight: "For real work: follow section tables and workshop instructions.",
         summaryTitle: "Calculation summary",
         profileLabel: "Profile",
@@ -510,20 +515,20 @@
         seriesHint: "HEA / HEB / HEM",
         sizeLabel: "Größe",
         sizeHint: "HE 100 … HE 400",
-        cutWingsLabel: "Welche Flansche für den Winkel berücksichtigt werden",
+        cutWingsLabel: "Flansche für winkelbasierten Schnitt",
         cutWingsHint: "Winkel hängt von der Differenz zwischen Ober- und Unterflansch ab",
         cutModeTop: "Schnitt am Oberflansch",
         cutModeBottom: "Schnitt am Unterflansch",
-        cutModeBoth: "Getrennter Schnittwert für beide Flansche",
+        cutModeBoth: "Getrennter Schnitt je Flansch (manuelle Eingabe)",
         angleLabel: "Ziel-Fügungswinkel zwischen zwei Trägern θ (Grad)",
         angleHint: "Nur um einen Vorschlag für den Schnitt zu berechnen",
         deltaSectionLabel: "Flanschschnitt (pro Stück vor dem Fügen) mm",
-        deltaTopLabel: "Δtop — Schnitt am Oberflansch",
-        deltaBottomLabel: "Δbottom — Schnitt am Unterflansch",
+        deltaTopLabel: "Schnitt am Oberflansch",
+        deltaBottomLabel: "Schnitt am Unterflansch",
         slopeSectionLabel: "Neigung der Schnittlinie in der Zeichnung (von senkrecht)",
-        slopeSectionHint: "Frei je Flansch (nur optisch)",
-        alphaTopTitle: "Neigung Oberflansch-Linie (αtop)",
-        alphaBottomTitle: "Neigung Unterflansch-Linie (αbottom)",
+        slopeSectionHint: "Frei je Flansch – nur optisch",
+        alphaTopTitle: "Neigung der oberen Schnittlinie",
+        alphaBottomTitle: "Neigung der unteren Schnittlinie",
         tiltDirSectionLabel: "Neigungsrichtung (nur Zeichnung)",
         tiltDirSectionHint: "Beeinflusst die Berechnung nicht",
         tiltTopLabel: "Neigungsrichtung oben",
@@ -536,7 +541,7 @@
         legendWeb: "Steg (web)",
         legendCuts: "Schnittlinien (senkrecht oder geneigt) nach Ihren Einstellungen",
         legendNote: "Zeichnung ist schematisch — maßgebend sind die Zahlenwerte",
-        footerLeft: "HE Cut Pro v10.2 — Schnittdifferenz der Flansche",
+        footerLeft: "HE Cut Pro v10.3 — Schnittdifferenz der Flansche",
         footerRight: "Für die Ausführung: Tabellen & Werkstattvorgaben beachten.",
         summaryTitle: "Berechnungsübersicht",
         profileLabel: "Profil",
@@ -572,7 +577,6 @@
       HEM: {100:{b:120},120:{b:120},140:{b:140},160:{b:160},180:{b:180},200:{b:200},220:{b:220},240:{b:240},260:{b:260},280:{b:260},300:{b:300},320:{b:300},340:{b:300},360:{b:300},400:{b:300}}
     };
 
-    // ثابت معايرة تقريباً من مثال HEM260 / 30°
     const CALIB = 1.0339;
 
     const $series = document.getElementById('series');
@@ -593,8 +597,9 @@
     const $cutWingsRadios = document.querySelectorAll('input[name="cutWings"]');
     const $themeToggle = document.getElementById('themeToggle');
     const $langButtons = document.querySelectorAll('.lang-btn');
+    const $theoryTextContainer = document.getElementById('theoryTextContainer');
 
-    let mode = 'angle'; // 'angle' او 'cuts'
+    let mode = 'angle'; // 'angle' أو 'cuts'
 
     function getCutMode() {
       const checked = document.querySelector('input[name="cutWings"]:checked');
@@ -639,7 +644,6 @@
       const data = HE_DATA[s][sz] || {b:180};
       const b    = data.b;
 
-      // نضبط مدى السلايدر حسب عرض الجناح (نخلي الماكس = ~60% من العرض)
       const maxCut = Math.round(b * 0.6);
       $deltaTopRange.max = maxCut;
       $deltaBottomRange.max = maxCut;
@@ -662,7 +666,6 @@
       $alphaBottomRange.value = alphaBottomDeg;
 
       if (mode === 'angle') {
-        // من الزاوية → نقترح قص بحيث يكون كله على جناح واحد (حسب اختيارك)
         if (!isFinite(angDeg) || angDeg < 1) angDeg = 1;
         if (angDeg > 45) angDeg = 45;
 
@@ -676,12 +679,11 @@
         } else if (cutMode === 'bottom') {
           deltaTop = 0;
           deltaBottom = deltaGeom;
-        } else { // both: نعتبره مثل قص علوي فقط من ناحية الاقتراح
+        } else { // both: نتعامل مع الاقتراح كقص علوي
           deltaTop = deltaGeom;
           deltaBottom = 0;
         }
       } else {
-        // من القص → نحسب زاوية تقريبية من فرق القص
         if (deltaTop < 0) deltaTop = 0;
         if (deltaBottom < 0) deltaBottom = 0;
         deltaTop = Math.min(deltaTop, maxCut);
@@ -872,7 +874,7 @@
       $frontWrapper.innerHTML = svg;
     }
 
-    // تبديل اللغة في الواجهة الثابتة
+    // تبديل اللغة في الواجهة
     function applyTranslations(lang){
       currentLang = lang;
       const dict = I18N[lang];
@@ -887,7 +889,10 @@
         }
       });
 
-      // تلوين أزرار اللغة
+      if (dict && dict.theoryText){
+        $theoryTextContainer.innerHTML = dict.theoryText;
+      }
+
       $langButtons.forEach(btn=>{
         if(btn.dataset.lang === lang){
           btn.classList.add('lang-btn-active');
@@ -904,10 +909,32 @@
     $angle.addEventListener('input', () => { mode = 'angle'; calc(); });
     $angleRange.addEventListener('input', () => { mode = 'angle'; $angle.value = $angleRange.value; calc(); });
 
-    $deltaTop.addEventListener('input', () => { mode = 'cuts'; $deltaTopRange.value = $deltaTop.value || 0; calc(); });
-    $deltaBottom.addEventListener('input', () => { mode = 'cuts'; $deltaBottomRange.value = $deltaBottom.value || 0; calc(); });
-    $deltaTopRange.addEventListener('input', () => { mode = 'cuts'; $deltaTop.value = $deltaTopRange.value; calc(); });
-    $deltaBottomRange.addEventListener('input', () => { mode = 'cuts'; $deltaBottom.value = $deltaBottomRange.value; calc(); });
+    // 🔧 إدخال القص: حساب عند الانتهاء فقط (change) لتحسين تجربة الكتابة
+    $deltaTop.addEventListener('focus', e => e.target.select());
+    $deltaBottom.addEventListener('focus', e => e.target.select());
+
+    $deltaTop.addEventListener('change', () => {
+      mode = 'cuts';
+      $deltaTopRange.value = $deltaTop.value || 0;
+      calc();
+    });
+    $deltaBottom.addEventListener('change', () => {
+      mode = 'cuts';
+      $deltaBottomRange.value = $deltaBottom.value || 0;
+      calc();
+    });
+
+    // السلايدرات تبقى مباشرة
+    $deltaTopRange.addEventListener('input', () => {
+      mode = 'cuts';
+      $deltaTop.value = $deltaTopRange.value;
+      calc();
+    });
+    $deltaBottomRange.addEventListener('input', () => {
+      mode = 'cuts';
+      $deltaBottom.value = $deltaBottomRange.value;
+      calc();
+    });
 
     $alphaTop.addEventListener('input', () => calc());
     $alphaTopRange.addEventListener('input', () => { $alphaTop.value = $alphaTopRange.value; calc(); });
@@ -918,7 +945,6 @@
 
     $btnReset.addEventListener('click', () => {
       mode = 'angle';
-      currentLang = currentLang || 'ar';
       $series.value = 'HEB';
       populateSizes();
       $size.value = '180';
@@ -963,8 +989,7 @@
     // تهيئة
     populateSizes();
     document.getElementById('size').value = '180';
-    calc();
     applyTranslations('ar'); // افتراضي عربي
   </script>
 </body>
-</html>
+  </html>
