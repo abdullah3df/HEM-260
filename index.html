@@ -65,7 +65,6 @@
           قص الجناح العلوي والسفلي — ميلان حر لكل جناح
         </p>
       </div>
-      <!-- رجّعنا وسم modeLabel عشان السكربت -->
       <div class="text-[10px] sm:text-xs text-slate-300 text-left leading-snug" id="modeLabel">
         وضع الحساب: من الزاوية → القص
       </div>
@@ -135,20 +134,32 @@
           </div>
         </div>
 
-        <!-- قص الجناحين -->
+        <!-- قص الجناح (لكل قطعة) -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
           قص الجناح (لكل قطعة) mm
         </label>
         <div class="col-span-2 grid grid-cols-2 gap-3">
+          <!-- علوي -->
           <div>
             <div class="text-xs text-slate-400 mb-1">Δ<sub>top</sub></div>
-            <input id="deltaTop" type="number" min="0" step="0.1" value="0"
-                   class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+            <div class="flex flex-col gap-1">
+              <input id="deltaTopRange" type="range" min="0" max="100" step="0.1" value="0"/>
+              <div class="flex items-center gap-1 text-xs text-slate-200">
+                <input id="deltaTop" type="number" min="0" step="0.1" value="0"
+                       class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+              </div>
+            </div>
           </div>
+          <!-- سفلي -->
           <div>
             <div class="text-xs text-slate-400 mb-1">Δ<sub>bottom</sub></div>
-            <input id="deltaBottom" type="number" min="0" step="0.1" value="0"
-                   class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+            <div class="flex flex-col gap-1">
+              <input id="deltaBottomRange" type="range" min="0" max="100" step="0.1" value="0"/>
+              <div class="flex items-center gap-1 text-xs text-slate-200">
+                <input id="deltaBottom" type="number" min="0" step="0.1" value="0"
+                       class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -163,7 +174,7 @@
             <span>زاوية ميلان الخط العلوي (α<sub>top</sub>)</span>
             <span class="inline-flex items-center gap-1 text-[10px] text-sky-300/80 cursor-help"
                   title="0° = خط عمودي، 30° أو أكثر = خط مائل (للتمثيل البصري فقط)">
-              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-3 ه-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
                       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                       clip-rule="evenodd"/>
@@ -186,7 +197,7 @@
             <span>زاوية ميلان الخط السفلي (α<sub>bottom</sub>)</span>
             <span class="inline-flex items-center gap-1 text-[10px] text-sky-300/80 cursor-help"
                   title="0° = خط عمودي، 30° أو أكثر = خط مائل (للتمثيل البصري فقط)">
-              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-3 ه-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
                       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                       clip-rule="evenodd"/>
@@ -250,7 +261,7 @@
 
       <p class="text-[11px] text-slate-400 mt-3 leading-relaxed">
         <b>ملاحظات:</b><br>
-        • الزوايا α<sub>top</sub> و α<sub>bottom</sub> + اتجاهيهما المستقل يتحكم فقط في <b>شكل الخط الأحمر في الرسم</b> ولا يغيّر القيم الهندسية للقص.<br>
+        • الزوايا α<sub>top</sub> و α<sub>bottom</sub> + اتجاهيهما المستقل يتحكم فقط في <b>شكل الخط الأحمر في الرسم</b> ولا يغيّر الحسابات الهندسية للقص.<br>
         • الوجه الأمامي والخلفي للقطعة مفهومان هنا أن لهما نفس شكل القص.
       </p>
     </section>
@@ -298,6 +309,8 @@
     const $angleRange = document.getElementById('angleRange');
     const $deltaTop = document.getElementById('deltaTop');
     const $deltaBottom = document.getElementById('deltaBottom');
+    const $deltaTopRange = document.getElementById('deltaTopRange');
+    const $deltaBottomRange = document.getElementById('deltaBottomRange');
     const $alphaTop = document.getElementById('alphaTop');
     const $alphaTopRange = document.getElementById('alphaTopRange');
     const $alphaBottom = document.getElementById('alphaBottom');
@@ -332,6 +345,12 @@
         .join('');
     }
 
+    function updateDeltaRangesMax(b) {
+      const maxVal = Math.max(20, Math.round(b / 2)); // نصف عرض الجناح تقريباً
+      $deltaTopRange.max = maxVal;
+      $deltaBottomRange.max = maxVal;
+    }
+
     function calc() {
       const s   = $series.value;
       const sz  = Number($size.value);
@@ -342,6 +361,8 @@
       let angDeg= Number($angle.value);
       const data = HE_DATA[s][sz] || {b:180};
       const b    = data.b;
+
+      updateDeltaRangesMax(b);
 
       let deltaTop = Number($deltaTop.value);
       let deltaBottom = Number($deltaBottom.value);
@@ -387,10 +408,13 @@
         if (angDeg > 60) angDeg = 60;
       }
 
+      // sync sliders
       $angle.value = angDeg.toFixed(1);
       $angleRange.value = angDeg;
       $deltaTop.value = deltaTop.toFixed(2);
       $deltaBottom.value = deltaBottom.toFixed(2);
+      $deltaTopRange.value = deltaTop;
+      $deltaBottomRange.value = deltaBottom;
 
       const thetaTop = deltaTop > 0.0001 ? Math.atan((deltaTop / CALIB) * 2 / b) : 0;
       const thetaBottom = deltaBottom > 0.0001 ? Math.atan((deltaBottom / CALIB) * 2 / b) : 0;
@@ -540,15 +564,28 @@
       $frontWrapper.innerHTML = svg;
     }
 
-    [$series, $size].forEach(el => el.addEventListener('input', () => calc()));
+    [$series, $size].forEach(el => el.addEventListener('input', () => { mode='angle'; calc(); }));
     $angle.addEventListener('input', () => { mode = 'angle'; calc(); });
     $angleRange.addEventListener('input', () => { mode = 'angle'; $angle.value = $angleRange.value; calc(); });
+
     $deltaTop.addEventListener('input', () => { mode = 'cuts'; calc(); });
     $deltaBottom.addEventListener('input', () => { mode = 'cuts'; calc(); });
+    $deltaTopRange.addEventListener('input', () => {
+      mode = 'cuts';
+      $deltaTop.value = $deltaTopRange.value;
+      calc();
+    });
+    $deltaBottomRange.addEventListener('input', () => {
+      mode = 'cuts';
+      $deltaBottom.value = $deltaBottomRange.value;
+      calc();
+    });
+
     $alphaTop.addEventListener('input', () => calc());
     $alphaTopRange.addEventListener('input', () => { $alphaTop.value = $alphaTopRange.value; calc(); });
     $alphaBottom.addEventListener('input', () => calc());
     $alphaBottomRange.addEventListener('input', () => { $alphaBottom.value = $alphaBottomRange.value; calc(); });
+
     $cutWingsRadios.forEach(r => r.addEventListener('change', () => { mode = 'angle'; calc(); }));
     document.querySelectorAll('input[name="tiltDirTop"], input[name="tiltDirBottom"]').forEach(r => r.addEventListener('change', () => calc()));
 
@@ -561,6 +598,8 @@
       $angleRange.value = 30;
       $deltaTop.value = 0;
       $deltaBottom.value = 0;
+      $deltaTopRange.value = 0;
+      $deltaBottomRange.value = 0;
       $alphaTop.value = 0;
       $alphaTopRange.value = 0;
       $alphaBottom.value = 0;
