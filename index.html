@@ -3,25 +3,73 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>HE Cut Pro v10.1 — فرق القص بين العلوي والسفلي</title>
+  <title>HE Cut Pro v10.2 — Multi-Lang + Theme</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
     html,body{font-family:Cairo,system-ui,ui-sans-serif;}
     svg,svg *{user-select:none}
+
     body{
+      min-height:100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* الوضع الداكن (الافتراضي) */
+    body.theme-dark{
       background:
         radial-gradient(circle at top left, rgba(56,189,248,0.2), transparent 55%),
         radial-gradient(circle at bottom right, rgba(129,140,248,0.25), #020617);
-      min-height:100vh;
+      color:#e5e7eb;
     }
+    body.theme-dark .glass{
+      background: radial-gradient(circle at top, rgba(148,163,184,0.18), rgba(15,23,42,0.9));
+      backdrop-filter: blur(18px);
+    }
+    body.theme-dark header,
+    body.theme-dark footer{
+      background-color: rgba(15,23,42,0.9);
+      border-color: rgba(30,64,175,0.5);
+    }
+
+    /* الوضع الفاتح */
+    body.theme-light{
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.15), #f9fafb);
+      color:#0f172a;
+    }
+    body.theme-light .glass{
+      background: radial-gradient(circle at top, rgba(226,232,240,0.9), rgba(241,245,249,0.95));
+      backdrop-filter: blur(16px);
+      border-color:#cbd5f5;
+    }
+    body.theme-light header,
+    body.theme-light footer{
+      background-color: rgba(241,245,249,0.96);
+      border-color:#cbd5f5;
+    }
+    body.theme-light .text-slate-100{color:#0f172a;}
+    body.theme-light .text-slate-200{color:#111827;}
+    body.theme-light .text-slate-300{color:#111827;}
+    body.theme-light .text-slate-400{color:#4b5563;}
+    body.theme-light .text-slate-500{color:#6b7280;}
+    body.theme-light .text-slate-900{color:#020617;}
+    body.theme-light .border-slate-700,
+    body.theme-light .border-slate-700\/70{border-color:#cbd5f5;}
+    body.theme-light .bg-slate-900\/70{background-color:rgba(15,23,42,0.04);}
+    body.theme-light .bg-slate-900\/80{background-color:rgba(15,23,42,0.06);}
+    body.theme-light .bg-slate-800{background-color:#e5e7eb;}
+    body.theme-light .bg-slate-700{background-color:#e5e7eb;}
+
     .glass {
       background: radial-gradient(circle at top, rgba(148,163,184,0.18), rgba(15,23,42,0.9));
       backdrop-filter: blur(18px);
     }
+
     input[type="range"] {
       -webkit-appearance:none;appearance:none;width:100%;height:0.5rem;border-radius:999px;background:#020617;outline:none;
     }
+    body.theme-light input[type="range"]{background:#e5e7eb;}
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:999px;background:#38bdf8;border:2px solid #0f172a;box-shadow:0 0 0 4px rgba(56,189,248,0.4);cursor:pointer;margin-top:-4px;
     }
@@ -31,9 +79,9 @@
     input[type="range"]::-moz-range-track {
       background:#020617;height:0.5rem;border-radius:999px;
     }
-    .cursor-help {
-      position: relative;
-    }
+    body.theme-light input[type="range"]::-moz-range-track{background:#e5e7eb;}
+
+    .cursor-help { position: relative; }
     .cursor-help:hover::after {
       content: attr(title);
       position: absolute;
@@ -50,20 +98,46 @@
       z-index: 10;
       border: 1px solid #38bdf8;
     }
+    body.theme-light .cursor-help:hover::after{
+      background:#111827;
+      color:#e5e7eb;
+    }
+
+    .lang-btn-active{
+      background:#38bdf8;
+      color:#0f172a;
+      font-weight:700;
+    }
   </style>
 </head>
-<body class="text-slate-100">
+<body class="text-slate-100 theme-dark">
 
   <!-- شريط علوي -->
   <header class="border-b border-slate-800/60 bg-slate-900/80 backdrop-blur sticky top-0 z-20">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <div>
         <h1 class="text-xl sm:text-2xl font-bold tracking-tight">
-          HE Cut Pro <span class="text-sky-400 text-base align-middle">v10.1</span>
+          <span data-i18n="appTitle">HE Cut Pro</span>
+          <span class="text-sky-400 text-base align-middle">v10.2</span>
         </h1>
-        <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
-          قص الجناح العلوي والسفلي — زاوية تجميع من <b>فرق القص</b> بين الجناحين + ميلان حر (تمثيلي)
+        <p class="text-xs sm:text-sm text-slate-400 mt-0.5" data-i18n="subtitle">
+          قص الجناح العلوي والسفلي — زاوية تجميع من فرق القص + ميلان حر (تمثيلي)
         </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- اختيار اللغة -->
+        <div class="flex bg-slate-900/60 border border-slate-600/70 rounded-xl overflow-hidden text-xs">
+          <button class="lang-btn lang-btn-active px-2.5 py-1" data-lang="ar">ع</button>
+          <button class="lang-btn px-2.5 py-1 text-slate-300" data-lang="en">EN</button>
+          <button class="lang-btn px-2.5 py-1 text-slate-300" data-lang="de">DE</button>
+        </div>
+        <!-- زر الثيم -->
+        <button id="themeToggle"
+                class="w-8 h-8 rounded-full border border-slate-600 flex items-center justify-center text-lg bg-slate-900/70 hover:bg-slate-800"
+                title="Toggle light/dark">
+          ☾
+        </button>
       </div>
     </div>
   </header>
@@ -75,15 +149,15 @@
       <div class="flex items-center justify-between gap-2 mb-4">
         <h2 class="font-semibold text-lg sm:text-xl flex items-center gap-2">
           <span class="inline-flex h-6 w-6 rounded-full bg-sky-500/20 border border-sky-400/50 items-center justify-center text-[11px]">1</span>
-          الإعدادات &amp; الحساب
+          <span data-i18n="panel1Title">الإعدادات &amp; الحساب</span>
         </h2>
       </div>
 
       <div class="grid grid-cols-2 gap-3 text-sm">
         <!-- سلسلة -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between">
-          سلسلة المقطع
-          <span class="text-[10px] text-sky-300/80">HEA / HEB / HEM</span>
+          <span data-i18n="seriesLabel">سلسلة المقطع</span>
+          <span class="text-[10px] text-sky-300/80" data-i18n="seriesHint">HEA / HEB / HEM</span>
         </label>
         <select id="series" class="col-span-2 rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-400">
           <option value="HEA">HEA</option>
@@ -93,36 +167,36 @@
 
         <!-- مقاس -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          المقاس
-          <span class="text-[10px] text-slate-400">HE 100 … HE 400</span>
+          <span data-i18n="sizeLabel">المقاس</span>
+          <span class="text-[10px] text-slate-400" data-i18n="sizeHint">HE 100 … HE 400</span>
         </label>
         <select id="size" class="col-span-2 rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-sky-400"></select>
 
         <!-- اختيار الأجنحة -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          الأجنحة المراد اعتمادها عند حساب القص من الزاوية
-          <span class="text-[10px] text-slate-400">الزاوية تعتمد على فرق القص بين العلوي والسفلي</span>
+          <span data-i18n="cutWingsLabel">الأجنحة المراد اعتمادها عند حساب القص من الزاوية</span>
+          <span class="text-[10px] text-slate-400" data-i18n="cutWingsHint">الزاوية تعتمد على فرق القص بين العلوي والسفلي</span>
         </label>
         <div class="col-span-2 flex flex-wrap gap-3 text-xs text-slate-200">
           <label class="inline-flex items-center gap-1">
             <input type="radio" name="cutWings" value="top" checked class="text-sky-400 focus:ring-sky-500">
-            <span>قص على الجناح العلوي</span>
+            <span data-i18n="cutModeTop">قص على الجناح العلوي</span>
           </label>
           <label class="inline-flex items-center gap-1">
             <input type="radio" name="cutWings" value="bottom" class="text-sky-400 focus:ring-sky-500">
-            <span>قص على الجناح السفلي</span>
+            <span data-i18n="cutModeBottom">قص على الجناح السفلي</span>
           </label>
           <label class="inline-flex items-center gap-1 cursor-help"
                  title="في وضع الزاوية: يعامل مثل قص على جناح واحد. في وضع إدخال القص: يمكنك إدخال قيم مختلفة للعلوي والسفلي، والزاوية تُحسب من الفرق بينهما.">
             <input type="radio" name="cutWings" value="both" class="text-sky-400 focus:ring-sky-500">
-            <span>إدخال قص مستقل للجناحين</span>
+            <span data-i18n="cutModeBoth">إدخال قص مستقل للجناحين</span>
           </label>
         </div>
 
         <!-- زاوية التجميع -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          زاوية التجميع المستهدفة بين قطعتين θ (درجة)
-          <span class="text-[10px] text-slate-400">تُستخدم فقط لحساب قص مقترح</span>
+          <span data-i18n="angleLabel">زاوية التجميع المستهدفة بين قطعتين θ (درجة)</span>
+          <span class="text-[10px] text-slate-400" data-i18n="angleHint">تُستخدم فقط لحساب قص مقترح</span>
         </label>
         <div class="col-span-2 flex items-center gap-3">
           <input id="angleRange" type="range" min="1" max="45" step="0.5" value="30"/>
@@ -135,11 +209,11 @@
 
         <!-- قص الجناحين -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-1">
-          قص الجناح (لكل قطعة قبل التجميع) mm
+          <span data-i18n="deltaSectionLabel">قص الجناح (لكل قطعة قبل التجميع) mm</span>
         </label>
         <div class="col-span-2 grid grid-cols-2 gap-3">
           <div>
-            <div class="text-xs text-slate-400 mb-1">Δ<sub>top</sub> — قص الجناح العلوي</div>
+            <div class="text-xs text-slate-400 mb-1" data-i18n="deltaTopLabel">Δ<sub>top</sub> — قص الجناح العلوي</div>
             <div class="flex items-center gap-2 mb-1">
               <input id="deltaTop" type="number" min="0" step="0.1" value="0"
                      class="w-20 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
@@ -148,7 +222,7 @@
             <input id="deltaTopRange" type="range" min="0" max="200" step="0.5" value="0"/>
           </div>
           <div>
-            <div class="text-xs text-slate-400 mb-1">Δ<sub>bottom</sub> — قص الجناح السفلي</div>
+            <div class="text-xs text-slate-400 mb-1" data-i18n="deltaBottomLabel">Δ<sub>bottom</sub> — قص الجناح السفلي</div>
             <div class="flex items-center gap-2 mb-1">
               <input id="deltaBottom" type="number" min="0" step="0.1" value="0"
                      class="w-20 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
@@ -160,13 +234,14 @@
 
         <!-- ميلان حر لكل جناح -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-3">
-          ميلان خط القص في الرسم (من العمودي) — <b class="text-amber-300">حر لكل جناح (تمثيل بصري فقط)</b>
+          <span data-i18n="slopeSectionLabel">ميلان خط القص في الرسم (من العمودي)</span>
+          <span class="text-[10px] text-amber-300" data-i18n="slopeSectionHint">حر لكل جناح (تمثيل بصري فقط)</span>
         </label>
 
         <!-- ميلان علوي -->
         <div class="col-span-2">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span>زاوية ميلان الخط العلوي (α<sub>top</sub>)</span>
+            <span data-i18n="alphaTopTitle">زاوية ميلان الخط العلوي (α<sub>top</sub>)</span>
             <span class="inline-flex items-center gap-1 text-[10px] text-sky-300/80 cursor-help"
                   title="0° = خط عمودي، قيم أكبر = خط مائل في الرسم فقط (لا تؤثر على الحساب الهندسي)">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -189,13 +264,12 @@
         <!-- ميلان سفلي -->
         <div class="col-span-2">
           <div class="flex items-center justify-between text-xs text-slate-400">
-            <span>زاوية ميلان الخط السفلي (α<sub>bottom</sub>)</span>
+            <span data-i18n="alphaBottomTitle">زاوية ميلان الخط السفلي (α<sub>bottom</sub>)</span>
             <span class="inline-flex items-center gap-1 text-[10px] text-sky-300/80 cursor-help"
                   title="0° = خط عمودي، قيم أكبر = خط مائل في الرسم فقط (لا تؤثر على الحساب الهندسي)">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                      clip-rule="evenodd"/>
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0z"/>
               </svg>
             </span>
           </div>
@@ -211,33 +285,33 @@
 
         <!-- اتجاه الميلان -->
         <label class="col-span-2 text-slate-300 flex items-center justify-between mt-2">
-          اتجاه الميلان (رسم فقط)
-          <span class="text-[10px] text-slate-400">لا يغيّر الحسابات</span>
+          <span data-i18n="tiltDirSectionLabel">اتجاه الميلان (رسم فقط)</span>
+          <span class="text-[10px] text-slate-400" data-i18n="tiltDirSectionHint">لا يغيّر الحسابات</span>
         </label>
         <div class="col-span-2 grid grid-cols-2 gap-3 text-xs text-slate-200">
           <div>
-            <div class="mb-1 text-slate-400">اتجاه ميلان العلوي</div>
+            <div class="mb-1 text-slate-400" data-i18n="tiltTopLabel">اتجاه ميلان العلوي</div>
             <div class="flex gap-2">
               <label class="inline-flex items-center gap-1">
                 <input type="radio" name="tiltDirTop" value="in" checked class="text-sky-400 focus:ring-sky-500">
-                <span>نحو الوسط</span>
+                <span data-i18n="tiltIn">نحو الوسط</span>
               </label>
               <label class="inline-flex items-center gap-1">
                 <input type="radio" name="tiltDirTop" value="out" class="text-sky-400 focus:ring-sky-500">
-                <span>خارج</span>
+                <span data-i18n="tiltOut">خارج</span>
               </label>
             </div>
           </div>
           <div>
-            <div class="mb-1 text-slate-400">اتجاه ميلان السفلي</div>
+            <div class="mb-1 text-slate-400" data-i18n="tiltBottomLabel">اتجاه ميلان السفلي</div>
             <div class="flex gap-2">
               <label class="inline-flex items-center gap-1">
                 <input type="radio" name="tiltDirBottom" value="in" checked class="text-emerald-400 focus:ring-emerald-500">
-                <span>نحو الوسط</span>
+                <span data-i18n="tiltIn">نحو الوسط</span>
               </label>
               <label class="inline-flex items-center gap-1">
                 <input type="radio" name="tiltDirBottom" value="out" class="text-emerald-400 focus:ring-emerald-500">
-                <span>خارج</span>
+                <span data-i18n="tiltOut">خارج</span>
               </label>
             </div>
           </div>
@@ -249,12 +323,12 @@
       <div class="mt-5 rounded-xl border border-slate-700/80 bg-slate-900/70 px-3.5 py-3 text-sm" id="readout"></div>
 
       <div class="mt-4 flex flex-wrap gap-2">
-        <button id="btnReset" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm border border-slate-600">
+        <button id="btnReset" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm border border-slate-600" data-i18n="resetBtn">
           إعادة الضبط
         </button>
       </div>
 
-      <p class="text-[11px] text-slate-400 mt-3 leading-relaxed">
+      <p class="text-[11px] text-slate-400 mt-3 leading-relaxed" data-i18n="theoryText">
         <b>الفكرة الهندسية:</b><br>
         • زاوية التجميع بين قطعتين تعتمد على <b>الفرق</b> بين قص الجناح العلوي Δtop والسفلي Δbottom.<br>
         • إذا كان Δtop = Δbottom ⇒ الفرق = 0 ⇒ الزاوية الناتجة ≈ 0° (القطعتان مستقيمتان بعد الجمع).<br>
@@ -268,7 +342,7 @@
       <div class="flex items-center justify-between gap-2 mb-4">
         <h2 class="font-semibold text-lg sm:text-xl flex items-center gap-2">
           <span class="inline-flex h-6 w-6 rounded-full bg-emerald-500/20 border border-emerald-400/60 items-center justify-center text-[11px]">2</span>
-          الوجه الأمامي — ميلان حر لكل جناح
+          <span data-i18n="panel2Title">الوجه الأمامي — ميلان حر لكل جناح</span>
         </h2>
       </div>
 
@@ -277,22 +351,220 @@
       </div>
 
       <div class="grid grid-cols-2 gap-3 text-[11px] text-slate-400 mt-4">
-        <div class="flex items-center gap-2"><span class="inline-block h-3 w-3 rounded-sm bg-slate-400/80"></span>الجناحان (علوي / سفلي)</div>
-        <div class="flex items-center gap-2"><span class="inline-block h-3 w-3 rounded-sm bg-slate-300"></span>العمود (web)</div>
-        <div class="flex items-center gap-2"><span class="inline-block h-3 w-3 rounded-sm bg-red-500"></span>خطوط القص (عمودية أو مائلة) حسب إعداداتك</div>
-        <div class="flex items-center gap-2"><span class="inline-block h-3 w-3 rounded-full border border-sky-400"></span>الرسم تمثيلي — الأبعاد الرقمية هي المرجع</div>
+        <div class="flex items-center gap-2">
+          <span class="inline-block h-3 w-3 rounded-sm bg-slate-400/80"></span>
+          <span data-i18n="legendFlanges">الجناحان (علوي / سفلي)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="inline-block h-3 w-3 rounded-sm bg-slate-300"></span>
+          <span data-i18n="legendWeb">العمود (web)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="inline-block h-3 w-3 rounded-sm bg-red-500"></span>
+          <span data-i18n="legendCuts">خطوط القص (عمودية أو مائلة) حسب إعداداتك</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="inline-block h-3 w-3 rounded-full border border-sky-400"></span>
+          <span data-i18n="legendNote">الرسم تمثيلي — الأبعاد الرقمية هي المرجع</span>
+        </div>
       </div>
     </section>
 
   </main>
 
   <footer class="max-w-6xl mx-auto px-4 pb-6 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2">
-    <span>HE Cut Pro v10.1 — فرق القص بين الجناحين</span>
-    <span>للتنفيذ العملي: اعتمد كتالوج المقاطع وتعليمات الورشة.</span>
+    <span data-i18n="footerLeft">HE Cut Pro v10.2 — فرق القص بين الجناحين</span>
+    <span data-i18n="footerRight">للتنفيذ العملي: اعتمد كتالوج المقاطع وتعليمات الورشة.</span>
   </footer>
 
   <!-- المنطق -->
   <script>
+    // i18n
+    const I18N = {
+      ar: {
+        appTitle: "HE Cut Pro",
+        subtitle: "قص الجناح العلوي والسفلي — زاوية تجميع من فرق القص + ميلان حر (تمثيلي)",
+        panel1Title: "الإعدادات & الحساب",
+        panel2Title: "الوجه الأمامي — ميلان حر لكل جناح",
+        seriesLabel: "سلسلة المقطع",
+        seriesHint: "HEA / HEB / HEM",
+        sizeLabel: "المقاس",
+        sizeHint: "HE 100 … HE 400",
+        cutWingsLabel: "الأجنحة المراد اعتمادها عند حساب القص من الزاوية",
+        cutWingsHint: "الزاوية تعتمد على فرق القص بين العلوي والسفلي",
+        cutModeTop: "قص على الجناح العلوي",
+        cutModeBottom: "قص على الجناح السفلي",
+        cutModeBoth: "إدخال قص مستقل للجناحين",
+        angleLabel: "زاوية التجميع المستهدفة بين قطعتين θ (درجة)",
+        angleHint: "تُستخدم فقط لحساب قص مقترح",
+        deltaSectionLabel: "قص الجناح (لكل قطعة قبل التجميع) mm",
+        deltaTopLabel: "Δtop — قص الجناح العلوي",
+        deltaBottomLabel: "Δbottom — قص الجناح السفلي",
+        slopeSectionLabel: "ميلان خط القص في الرسم (من العمودي)",
+        slopeSectionHint: "حر لكل جناح (تمثيل بصري فقط)",
+        alphaTopTitle: "زاوية ميلان الخط العلوي (αtop)",
+        alphaBottomTitle: "زاوية ميلان الخط السفلي (αbottom)",
+        tiltDirSectionLabel: "اتجاه الميلان (رسم فقط)",
+        tiltDirSectionHint: "لا يغيّر الحسابات",
+        tiltTopLabel: "اتجاه ميلان العلوي",
+        tiltBottomLabel: "اتجاه ميلان السفلي",
+        tiltIn: "نحو الوسط",
+        tiltOut: "خارج",
+        resetBtn: "إعادة الضبط",
+        theoryText: "<b>الفكرة الهندسية:</b><br>• زاوية التجميع بين قطعتين تعتمد على <b>الفرق</b> بين قص الجناح العلوي Δtop والسفلي Δbottom.<br>• إذا كان Δtop = Δbottom ⇒ الفرق = 0 ⇒ الزاوية الناتجة ≈ 0° (القطعتان مستقيمتان بعد الجمع).<br>• كلما زاد |Δtop − Δbottom| زادت زاوية التجميع بين القطعتين.<br>• الزوايا αtop و αbottom + اتجاه الميلان تتحكم فقط في شكل الخط الأحمر في الرسم ولا تغيّر الحسابات.",
+        legendFlanges: "الجناحان (علوي / سفلي)",
+        legendWeb: "العمود (web)",
+        legendCuts: "خطوط القص (عمودية أو مائلة) حسب إعداداتك",
+        legendNote: "الرسم تمثيلي — الأبعاد الرقمية هي المرجع",
+        footerLeft: "HE Cut Pro v10.2 — فرق القص بين الجناحين",
+        footerRight: "للتنفيذ العملي: اعتمد كتالوج المقاطع وتعليمات الورشة.",
+        summaryTitle: "ملخص الحساب",
+        profileLabel: "البروفايل",
+        flangeWidthLabel: "عرض الجناح b (تقريبي)",
+        cutModeDescTop: "قص على الجناح العلوي",
+        cutModeDescBottom: "قص على الجناح السفلي",
+        cutModeDescBoth: "إدخال قص مستقل للجناحين (الزاوية من الفرق بينهم)",
+        targetAngleLabel: "زاوية التجميع الهدف (من الشريط)",
+        deltaTopLabelTable: "قص الجناح العلوي لكل قطعة (Δtop)",
+        deltaBottomLabelTable: "قص الجناح السفلي لكل قطعة (Δbottom)",
+        diffCutLabel: "الفرق بين القصين |Δtop − Δbottom|",
+        pairAngleLabel: "زاوية تجميع تقريبية ناتجة من فرق القص",
+        pairAngleZeroNote: "≈ 0° (لأن Δtop = Δbottom أو قريب جدًا)",
+        remainingTopLabel: "العرض المتبقي في الجناح العلوي بعد القص",
+        remainingBottomLabel: "العرض المتبقي في الجناح السفلي بعد القص",
+        alphaTopLabelTable: "زاوية ميلان الخط العلوي في الرسم (αtop)",
+        alphaBottomLabelTable: "زاوية ميلان الخط السفلي في الرسم (αbottom)",
+        tiltTopDirLabel: "اتجاه ميلان العلوي (رسم)",
+        tiltBottomDirLabel: "اتجاه ميلان السفلي (رسم)",
+        noteDiffZero: "إذا كان Δtop = Δbottom بالضبط ⇒ الفرق = 0 ⇒ الزاوية الناتجة من القص ≈ 0° حتى لو أدخلت زاوية في الشريط.",
+        frontAnglePrefix: "θ ≈",
+        frontAngleSuffix: "(الهدف)",
+        frontCaption: "خطوط القص تمثّل Δtop و Δbottom التي أدخلتها."
+      },
+      en: {
+        appTitle: "HE Cut Pro",
+        subtitle: "Top & bottom flange cut — joint angle from cut difference + free visual tilt",
+        panel1Title: "Settings & Calculation",
+        panel2Title: "Front View — Free tilt per flange",
+        seriesLabel: "Section series",
+        seriesHint: "HEA / HEB / HEM",
+        sizeLabel: "Size",
+        sizeHint: "HE 100 … HE 400",
+        cutWingsLabel: "Which flanges to base the angle cut on",
+        cutWingsHint: "Angle depends on the difference between top & bottom cut",
+        cutModeTop: "Cut on top flange",
+        cutModeBottom: "Cut on bottom flange",
+        cutModeBoth: "Independent cut input for both flanges",
+        angleLabel: "Target assembly angle between two pieces θ (deg)",
+        angleHint: "Only used to propose a cut value",
+        deltaSectionLabel: "Flange cut (per piece before assembly) mm",
+        deltaTopLabel: "Δtop — cut of top flange",
+        deltaBottomLabel: "Δbottom — cut of bottom flange",
+        slopeSectionLabel: "Cut line tilt in drawing (from vertical)",
+        slopeSectionHint: "Free per flange (visual only)",
+        alphaTopTitle: "Tilt angle of top line (αtop)",
+        alphaBottomTitle: "Tilt angle of bottom line (αbottom)",
+        tiltDirSectionLabel: "Tilt direction (drawing only)",
+        tiltDirSectionHint: "Does not change the calculation",
+        tiltTopLabel: "Top tilt direction",
+        tiltBottomLabel: "Bottom tilt direction",
+        tiltIn: "towards web",
+        tiltOut: "outwards",
+        resetBtn: "Reset",
+        theoryText: "<b>Idea:</b><br>• The assembly angle between two pieces depends on the <b>difference</b> between top cut Δtop and bottom cut Δbottom.<br>• If Δtop = Δbottom ⇒ difference = 0 ⇒ resulting angle ≈ 0° (straight after joining).<br>• The larger |Δtop − Δbottom|, the larger the assembly angle.<br>• αtop / αbottom and tilt direction only change the <b>look</b> of the red line, not the math.",
+        legendFlanges: "Flanges (top / bottom)",
+        legendWeb: "Web",
+        legendCuts: "Cut lines (vertical or tilted) as per your settings",
+        legendNote: "Drawing is illustrative — numeric values are the reference",
+        footerLeft: "HE Cut Pro v10.2 — flange cut difference",
+        footerRight: "For real work: follow section tables and workshop instructions.",
+        summaryTitle: "Calculation summary",
+        profileLabel: "Profile",
+        flangeWidthLabel: "Flange width b (approx)",
+        cutModeDescTop: "Cut on top flange",
+        cutModeDescBottom: "Cut on bottom flange",
+        cutModeDescBoth: "Independent cut per flange (angle from difference)",
+        targetAngleLabel: "Target angle from slider",
+        deltaTopLabelTable: "Top flange cut per piece (Δtop)",
+        deltaBottomLabelTable: "Bottom flange cut per piece (Δbottom)",
+        diffCutLabel: "Difference |Δtop − Δbottom|",
+        pairAngleLabel: "Approx. assembly angle from cut difference",
+        pairAngleZeroNote: "≈ 0° (because Δtop = Δbottom or almost equal)",
+        remainingTopLabel: "Remaining top flange width after cut",
+        remainingBottomLabel: "Remaining bottom flange width after cut",
+        alphaTopLabelTable: "Top line tilt in drawing (αtop)",
+        alphaBottomLabelTable: "Bottom line tilt in drawing (αbottom)",
+        tiltTopDirLabel: "Top tilt direction (drawing)",
+        tiltBottomDirLabel: "Bottom tilt direction (drawing)",
+        noteDiffZero: "If Δtop = Δbottom exactly ⇒ difference = 0 ⇒ angle from cut ≈ 0° even if slider angle is set.",
+        frontAnglePrefix: "θ ≈",
+        frontAngleSuffix: "(target)",
+        frontCaption: "Red lines represent the Δtop / Δbottom values you entered."
+      },
+      de: {
+        appTitle: "HE Cut Pro",
+        subtitle: "Ober- und Unterflansch schneiden – Fügungswinkel aus Schnittdifferenz + freie Neigung (optisch)",
+        panel1Title: "Einstellungen & Berechnung",
+        panel2Title: "Vorderansicht — freie Neigung je Flansch",
+        seriesLabel: "Profilreihe",
+        seriesHint: "HEA / HEB / HEM",
+        sizeLabel: "Größe",
+        sizeHint: "HE 100 … HE 400",
+        cutWingsLabel: "Welche Flansche für den Winkel berücksichtigt werden",
+        cutWingsHint: "Winkel hängt von der Differenz zwischen Ober- und Unterflansch ab",
+        cutModeTop: "Schnitt am Oberflansch",
+        cutModeBottom: "Schnitt am Unterflansch",
+        cutModeBoth: "Getrennter Schnittwert für beide Flansche",
+        angleLabel: "Ziel-Fügungswinkel zwischen zwei Trägern θ (Grad)",
+        angleHint: "Nur um einen Vorschlag für den Schnitt zu berechnen",
+        deltaSectionLabel: "Flanschschnitt (pro Stück vor dem Fügen) mm",
+        deltaTopLabel: "Δtop — Schnitt am Oberflansch",
+        deltaBottomLabel: "Δbottom — Schnitt am Unterflansch",
+        slopeSectionLabel: "Neigung der Schnittlinie in der Zeichnung (von senkrecht)",
+        slopeSectionHint: "Frei je Flansch (nur optisch)",
+        alphaTopTitle: "Neigung Oberflansch-Linie (αtop)",
+        alphaBottomTitle: "Neigung Unterflansch-Linie (αbottom)",
+        tiltDirSectionLabel: "Neigungsrichtung (nur Zeichnung)",
+        tiltDirSectionHint: "Beeinflusst die Berechnung nicht",
+        tiltTopLabel: "Neigungsrichtung oben",
+        tiltBottomLabel: "Neigungsrichtung unten",
+        tiltIn: "zum Steg",
+        tiltOut: "nach außen",
+        resetBtn: "Zurücksetzen",
+        theoryText: "<b>Grundidee:</b><br>• Der Fügungswinkel zwischen zwei Trägern hängt von der <b>Differenz</b> zwischen Oberflansch-Schnitt Δtop und Unterflansch-Schnitt Δbottom ab.<br>• Wenn Δtop = Δbottom ⇒ Differenz = 0 ⇒ resultierender Winkel ≈ 0° (Stück bleibt gerade).<br>• Je größer |Δtop − Δbottom|, desto größer der Fügungswinkel.<br>• αtop / αbottom und die Richtung ändern nur das <b>Aussehen</b> der roten Linie, nicht die Berechnung.",
+        legendFlanges: "Flansche (oben / unten)",
+        legendWeb: "Steg (web)",
+        legendCuts: "Schnittlinien (senkrecht oder geneigt) nach Ihren Einstellungen",
+        legendNote: "Zeichnung ist schematisch — maßgebend sind die Zahlenwerte",
+        footerLeft: "HE Cut Pro v10.2 — Schnittdifferenz der Flansche",
+        footerRight: "Für die Ausführung: Tabellen & Werkstattvorgaben beachten.",
+        summaryTitle: "Berechnungsübersicht",
+        profileLabel: "Profil",
+        flangeWidthLabel: "Flanschbreite b (ca.)",
+        cutModeDescTop: "Schnitt am Oberflansch",
+        cutModeDescBottom: "Schnitt am Unterflansch",
+        cutModeDescBoth: "Getrennter Schnitt je Flansch (Winkel aus Differenz)",
+        targetAngleLabel: "Zielwinkel aus Schieberegler",
+        deltaTopLabelTable: "Oberflansch-Schnitt pro Stück (Δtop)",
+        deltaBottomLabelTable: "Unterflansch-Schnitt pro Stück (Δbottom)",
+        diffCutLabel: "Differenz |Δtop − Δbottom|",
+        pairAngleLabel: "Ca. Fügungswinkel aus Schnittdifferenz",
+        pairAngleZeroNote: "≈ 0° (weil Δtop = Δbottom oder fast gleich)",
+        remainingTopLabel: "Verbleibende Oberflanschbreite nach Schnitt",
+        remainingBottomLabel: "Verbleibende Unterflanschbreite nach Schnitt",
+        alphaTopLabelTable: "Neigung obere Linie in Zeichnung (αtop)",
+        alphaBottomLabelTable: "Neigung untere Linie in Zeichnung (αbottom)",
+        tiltTopDirLabel: "Neigungsrichtung oben (Zeichnung)",
+        tiltBottomDirLabel: "Neigungsrichtung unten (Zeichnung)",
+        noteDiffZero: "Wenn Δtop = Δbottom ⇒ Differenz = 0 ⇒ Winkel aus Schnitt ≈ 0°, auch wenn am Regler ein Winkel gesetzt ist.",
+        frontAnglePrefix: "θ ≈",
+        frontAngleSuffix: "(Ziel)",
+        frontCaption: "Rote Linien stellen die eingegebenen Werte Δtop / Δbottom dar."
+      }
+    };
+
+    let currentLang = 'ar';
+
     // بيانات HE (عرض الجناح فقط)
     const HE_DATA = {
       HEA: {100:{b:100},120:{b:120},140:{b:140},160:{b:160},180:{b:180},200:{b:200},220:{b:220},240:{b:240},260:{b:260},280:{b:280},300:{b:300},320:{b:300},340:{b:300},360:{b:300},400:{b:300}},
@@ -300,7 +572,7 @@
       HEM: {100:{b:120},120:{b:120},140:{b:140},160:{b:160},180:{b:180},200:{b:200},220:{b:220},240:{b:240},260:{b:260},280:{b:260},300:{b:300},320:{b:300},340:{b:300},360:{b:300},400:{b:300}}
     };
 
-    // ثابت معايرة
+    // ثابت معايرة تقريباً من مثال HEM260 / 30°
     const CALIB = 1.0339;
 
     const $series = document.getElementById('series');
@@ -319,6 +591,8 @@
     const $frontWrapper = document.getElementById('frontWrapper');
     const $btnReset = document.getElementById('btnReset');
     const $cutWingsRadios = document.querySelectorAll('input[name="cutWings"]');
+    const $themeToggle = document.getElementById('themeToggle');
+    const $langButtons = document.querySelectorAll('.lang-btn');
 
     let mode = 'angle'; // 'angle' او 'cuts'
 
@@ -354,6 +628,8 @@
     }
 
     function calc() {
+      const dict = I18N[currentLang];
+
       const s   = $series.value;
       const sz  = Number($size.value);
       const cutMode = getCutMode();
@@ -363,7 +639,7 @@
       const data = HE_DATA[s][sz] || {b:180};
       const b    = data.b;
 
-      // نضبط مدى السلايدر حسب عرض الجناح (نخلي الماكس = نصف العرض تقريباً)
+      // نضبط مدى السلايدر حسب عرض الجناح (نخلي الماكس = ~60% من العرض)
       const maxCut = Math.round(b * 0.6);
       $deltaTopRange.max = maxCut;
       $deltaBottomRange.max = maxCut;
@@ -386,7 +662,7 @@
       $alphaBottomRange.value = alphaBottomDeg;
 
       if (mode === 'angle') {
-        // من الزاوية → نقترح قص بحيث يكون كله على جناح واحد
+        // من الزاوية → نقترح قص بحيث يكون كله على جناح واحد (حسب اختيارك)
         if (!isFinite(angDeg) || angDeg < 1) angDeg = 1;
         if (angDeg > 45) angDeg = 45;
 
@@ -400,7 +676,7 @@
         } else if (cutMode === 'bottom') {
           deltaTop = 0;
           deltaBottom = deltaGeom;
-        } else { // both
+        } else { // both: نعتبره مثل قص علوي فقط من ناحية الاقتراح
           deltaTop = deltaGeom;
           deltaBottom = 0;
         }
@@ -427,6 +703,7 @@
       const diffCut = Math.abs(deltaTop - deltaBottom);
 
       renderReadout({
+        dict,
         s, sz, b,
         angDeg,
         deltaTop, deltaBottom,
@@ -436,6 +713,7 @@
         pairAngleFromCuts, diffCut
       });
       renderFront({
+        dict,
         b, sz, s, angDeg,
         deltaTop, deltaBottom,
         alphaTopDeg, alphaBottomDeg,
@@ -444,6 +722,7 @@
     }
 
     function renderReadout({
+      dict,
       s, sz, b,
       angDeg,
       deltaTop, deltaBottom,
@@ -453,62 +732,67 @@
       pairAngleFromCuts, diffCut
     }) {
       const cutModeText =
-        cutMode === 'top'    ? 'قص على الجناح العلوي' :
-        cutMode === 'bottom' ? 'قص على الجناح السفلي' :
-                               'إدخال قص مستقل للجناحين (الزاوية من الفرق بينهم)';
+        cutMode === 'top'    ? dict.cutModeDescTop :
+        cutMode === 'bottom' ? dict.cutModeDescBottom :
+                               dict.cutModeDescBoth;
 
       const pairAngleText = pairAngleFromCuts === 0
-        ? '≈ 0° (لأن Δtop = Δbottom أو قريب جدًا)'
+        ? dict.pairAngleZeroNote
         : `${pairAngleFromCuts.toFixed(2)}°`;
 
       $readout.innerHTML = `
-        <div class="text-sky-300 text-xs mb-1">ملخص الحساب</div>
+        <div class="text-sky-300 text-xs mb-1">${dict.summaryTitle}</div>
         <div class="grid grid-cols-2 gap-x-3 gap-y-1">
-          <div>البروفايل:</div><div class="text-right"><b>${s} ${sz}</b></div>
-          <div>عرض الجناح b (تقريبي):</div><div class="text-right"><b>${b.toFixed(0)} mm</b></div>
+          <div>${dict.profileLabel}:</div><div class="text-right"><b>${s} ${sz}</b></div>
+          <div>${dict.flangeWidthLabel}:</div><div class="text-right"><b>${b.toFixed(0)} mm</b></div>
 
-          <div>وضع القص من الزاوية:</div><div class="text-right"><b>${cutModeText}</b></div>
+          <div>${dict.cutWingsLabel}:</div><div class="text-right"><b>${cutModeText}</b></div>
 
-          <div>زاوية التجميع الهدف (من الشريط):</div>
+          <div>${dict.targetAngleLabel}:</div>
           <div class="text-right text-sky-300"><b>${angDeg.toFixed(2)}°</b></div>
 
-          <div>قص الجناح العلوي لكل قطعة (Δ<sub>top</sub>):</div>
+          <div>${dict.deltaTopLabelTable}:</div>
           <div class="text-right text-emerald-300"><b>${deltaTop.toFixed(2)} mm</b></div>
 
-          <div>قص الجناح السفلي لكل قطعة (Δ<sub>bottom</sub>):</div>
+          <div>${dict.deltaBottomLabelTable}:</div>
           <div class="text-right text-emerald-300"><b>${deltaBottom.toFixed(2)} mm</b></div>
 
-          <div>الفرق بين القصين |Δtop − Δbottom|:</div>
+          <div>${dict.diffCutLabel}:</div>
           <div class="text-right text-amber-300"><b>${diffCut.toFixed(2)} mm</b></div>
 
-          <div>زاوية تجميع تقريبية ناتجة من فرق القص:</div>
+          <div>${dict.pairAngleLabel}:</div>
           <div class="text-right text-sky-300"><b>${pairAngleText}</b></div>
 
-          <div>العرض المتبقي في الجناح العلوي بعد القص:</div>
+          <div>${dict.remainingTopLabel}:</div>
           <div class="text-right"><b>${remainingTop.toFixed(2)} mm</b></div>
 
-          <div>العرض المتبقي في الجناح السفلي بعد القص:</div>
+          <div>${dict.remainingBottomLabel}:</div>
           <div class="text-right"><b>${remainingBottom.toFixed(2)} mm</b></div>
 
-          <div>زاوية ميلان الخط العلوي في الرسم (α<sub>top</sub>):</div>
+          <div>${dict.alphaTopLabelTable}:</div>
           <div class="text-right"><b>${alphaTopDeg.toFixed(0)}°</b></div>
 
-          <div>زاوية ميلان الخط السفلي في الرسم (α<sub>bottom</sub>):</div>
+          <div>${dict.alphaBottomLabelTable}:</div>
           <div class="text-right"><b>${alphaBottomDeg.toFixed(0)}°</b></div>
 
-          <div>اتجاه ميلان العلوي (رسم):</div>
-          <div class="text-right"><b>${tiltDirTop === 'in' ? 'نحو الوسط' : 'خارج'}</b></div>
+          <div>${dict.tiltTopDirLabel}:</div>
+          <div class="text-right"><b>${tiltDirTop === 'in'
+            ? dict.tiltIn
+            : dict.tiltOut}</b></div>
 
-          <div>اتجاه ميلان السفلي (رسم):</div>
-          <div class="text-right"><b>${tiltDirBottom === 'in' ? 'نحو الوسط' : 'خارج'}</b></div>
+          <div>${dict.tiltBottomDirLabel}:</div>
+          <div class="text-right"><b>${tiltDirBottom === 'in'
+            ? dict.tiltIn
+            : dict.tiltOut}</b></div>
         </div>
         <div class="text-[10px] text-slate-400 mt-2">
-          إذا كان Δtop = Δbottom بالضبط ⇒ الفرق = 0 ⇒ الزاوية الناتجة من القص ≈ 0° حتى لو أدخلت زاوية في الشريط.
+          ${dict.noteDiffZero}
         </div>
       `;
     }
 
     function renderFront({
+      dict,
       b, sz, s, angDeg,
       deltaTop, deltaBottom,
       alphaTopDeg, alphaBottomDeg,
@@ -577,11 +861,42 @@
             <line x1="${cutXBottom}" y1="${botFlangeY - flangeTh}" x2="${cutXBottom + dxBottomTilt}" y2="${botFlangeY}" stroke="#f97373" stroke-width="4" stroke-linecap="round"/>
           ` : ''}
           <text x="${midX}" y="${topFlangeY - 12}" font-size="13" fill="#e5e7eb" text-anchor="middle" font-weight="600">${s} ${sz}</text>
-          <text x="${midX}" y="${botFlangeY + 18}" font-size="11" fill="#fda4af" text-anchor="middle" font-weight="600">θ ≈ ${angDeg.toFixed(1)}° (الهدف)</text>
-          <text x="${midX}" y="${botFlangeY + 34}" font-size="10" fill="#cbd5f5" text-anchor="middle">خطوط القص تمثّل Δtop و Δbottom التي أدخلتها.</text>
+          <text x="${midX}" y="${botFlangeY + 18}" font-size="11" fill="#fda4af" text-anchor="middle" font-weight="600">
+            ${dict.frontAnglePrefix} ${angDeg.toFixed(1)}° ${dict.frontAngleSuffix}
+          </text>
+          <text x="${midX}" y="${botFlangeY + 34}" font-size="10" fill="#cbd5f5" text-anchor="middle">
+            ${dict.frontCaption}
+          </text>
         </svg>
       `;
       $frontWrapper.innerHTML = svg;
+    }
+
+    // تبديل اللغة في الواجهة الثابتة
+    function applyTranslations(lang){
+      currentLang = lang;
+      const dict = I18N[lang];
+
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(dict && dict[key]){
+          el.innerHTML = dict[key];
+        }
+      });
+
+      // تلوين أزرار اللغة
+      $langButtons.forEach(btn=>{
+        if(btn.dataset.lang === lang){
+          btn.classList.add('lang-btn-active');
+        }else{
+          btn.classList.remove('lang-btn-active');
+        }
+      });
+
+      calc();
     }
 
     // الأحداث
@@ -603,6 +918,7 @@
 
     $btnReset.addEventListener('click', () => {
       mode = 'angle';
+      currentLang = currentLang || 'ar';
       $series.value = 'HEB';
       populateSizes();
       $size.value = '180';
@@ -622,10 +938,33 @@
       calc();
     });
 
+    // زر الثيم
+    $themeToggle.addEventListener('click', () => {
+      const body = document.body;
+      const isDark = body.classList.contains('theme-dark');
+      if(isDark){
+        body.classList.remove('theme-dark');
+        body.classList.add('theme-light');
+        $themeToggle.textContent = '☀';
+      }else{
+        body.classList.remove('theme-light');
+        body.classList.add('theme-dark');
+        $themeToggle.textContent = '☾';
+      }
+    });
+
+    // أزرار اللغة
+    $langButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        applyTranslations(btn.dataset.lang);
+      });
+    });
+
     // تهيئة
     populateSizes();
     document.getElementById('size').value = '180';
     calc();
+    applyTranslations('ar'); // افتراضي عربي
   </script>
 </body>
-  </html>
+</html>
