@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>HE Cut Pro v10 — فرق القص بين العلوي والسفلي</title>
+  <title>HE Cut Pro v10.1 — فرق القص بين العلوي والسفلي</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
@@ -59,7 +59,7 @@
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <div>
         <h1 class="text-xl sm:text-2xl font-bold tracking-tight">
-          HE Cut Pro <span class="text-sky-400 text-base align-middle">v10</span>
+          HE Cut Pro <span class="text-sky-400 text-base align-middle">v10.1</span>
         </h1>
         <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
           قص الجناح العلوي والسفلي — زاوية تجميع من <b>فرق القص</b> بين الجناحين + ميلان حر (تمثيلي)
@@ -115,7 +115,7 @@
           <label class="inline-flex items-center gap-1 cursor-help"
                  title="في وضع الزاوية: يعامل مثل قص على جناح واحد. في وضع إدخال القص: يمكنك إدخال قيم مختلفة للعلوي والسفلي، والزاوية تُحسب من الفرق بينهما.">
             <input type="radio" name="cutWings" value="both" class="text-sky-400 focus:ring-sky-500">
-            <span>إدخال قص مختلف للجناحين</span>
+            <span>إدخال قص مستقل للجناحين</span>
           </label>
         </div>
 
@@ -140,13 +140,21 @@
         <div class="col-span-2 grid grid-cols-2 gap-3">
           <div>
             <div class="text-xs text-slate-400 mb-1">Δ<sub>top</sub> — قص الجناح العلوي</div>
-            <input id="deltaTop" type="number" min="0" step="0.1" value="0"
-                   class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+            <div class="flex items-center gap-2 mb-1">
+              <input id="deltaTop" type="number" min="0" step="0.1" value="0"
+                     class="w-20 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
+              <span class="text-[10px] text-slate-400">mm</span>
+            </div>
+            <input id="deltaTopRange" type="range" min="0" max="200" step="0.5" value="0"/>
           </div>
           <div>
             <div class="text-xs text-slate-400 mb-1">Δ<sub>bottom</sub> — قص الجناح السفلي</div>
-            <input id="deltaBottom" type="number" min="0" step="0.1" value="0"
-                   class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-400"/>
+            <div class="flex items-center gap-2 mb-1">
+              <input id="deltaBottom" type="number" min="0" step="0.1" value="0"
+                     class="w-20 rounded-lg border border-slate-700 bg-slate-900/80 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400 text-xs text-center"/>
+              <span class="text-[10px] text-slate-400">mm</span>
+            </div>
+            <input id="deltaBottomRange" type="range" min="0" max="200" step="0.5" value="0"/>
           </div>
         </div>
 
@@ -186,7 +194,7 @@
                   title="0° = خط عمودي، قيم أكبر = خط مائل في الرسم فقط (لا تؤثر على الحساب الهندسي)">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                       clip-rule="evenodd"/>
               </svg>
             </span>
@@ -279,7 +287,7 @@
   </main>
 
   <footer class="max-w-6xl mx-auto px-4 pb-6 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2">
-    <span>HE Cut Pro v10 — فرق القص بين الجناحين</span>
+    <span>HE Cut Pro v10.1 — فرق القص بين الجناحين</span>
     <span>للتنفيذ العملي: اعتمد كتالوج المقاطع وتعليمات الورشة.</span>
   </footer>
 
@@ -292,7 +300,7 @@
       HEM: {100:{b:120},120:{b:120},140:{b:140},160:{b:160},180:{b:180},200:{b:200},220:{b:220},240:{b:240},260:{b:260},280:{b:260},300:{b:300},320:{b:300},340:{b:300},360:{b:300},400:{b:300}}
     };
 
-    // ثابت معايرة: HEM 260, زاوية 30° مع قص علوي ≈72.03
+    // ثابت معايرة
     const CALIB = 1.0339;
 
     const $series = document.getElementById('series');
@@ -301,6 +309,8 @@
     const $angleRange = document.getElementById('angleRange');
     const $deltaTop = document.getElementById('deltaTop');
     const $deltaBottom = document.getElementById('deltaBottom');
+    const $deltaTopRange = document.getElementById('deltaTopRange');
+    const $deltaBottomRange = document.getElementById('deltaBottomRange');
     const $alphaTop = document.getElementById('alphaTop');
     const $alphaTopRange = document.getElementById('alphaTopRange');
     const $alphaBottom = document.getElementById('alphaBottom');
@@ -353,6 +363,11 @@
       const data = HE_DATA[s][sz] || {b:180};
       const b    = data.b;
 
+      // نضبط مدى السلايدر حسب عرض الجناح (نخلي الماكس = نصف العرض تقريباً)
+      const maxCut = Math.round(b * 0.6);
+      $deltaTopRange.max = maxCut;
+      $deltaBottomRange.max = maxCut;
+
       let angDeg = Number($angle.value);
       let deltaTop = Number($deltaTop.value);
       let deltaBottom = Number($deltaBottom.value);
@@ -371,13 +386,13 @@
       $alphaBottomRange.value = alphaBottomDeg;
 
       if (mode === 'angle') {
-        // من الزاوية → نقترح قص بحيث يكون كله على جناح واحد (حتى يكون هناك فرق)
+        // من الزاوية → نقترح قص بحيث يكون كله على جناح واحد
         if (!isFinite(angDeg) || angDeg < 1) angDeg = 1;
         if (angDeg > 45) angDeg = 45;
 
         const thetaHalfRad = (angDeg * Math.PI / 180) / 2;
         const deltaBase = b * Math.tan(thetaHalfRad);
-        const deltaGeom = deltaBase * CALIB;
+        const deltaGeom = Math.min(maxCut, deltaBase * CALIB);
 
         if (cutMode === 'top') {
           deltaTop = deltaGeom;
@@ -385,7 +400,7 @@
         } else if (cutMode === 'bottom') {
           deltaTop = 0;
           deltaBottom = deltaGeom;
-        } else { // both: نقترح قص على العلوي فقط، ويمكنك تعديل السفلي يدويًا
+        } else { // both
           deltaTop = deltaGeom;
           deltaBottom = 0;
         }
@@ -393,6 +408,8 @@
         // من القص → نحسب زاوية تقريبية من فرق القص
         if (deltaTop < 0) deltaTop = 0;
         if (deltaBottom < 0) deltaBottom = 0;
+        deltaTop = Math.min(deltaTop, maxCut);
+        deltaBottom = Math.min(deltaBottom, maxCut);
         const angFromCuts = angleFromCuts(deltaTop, deltaBottom, b);
         angDeg = Math.min(60, Math.max(0, angFromCuts));
       }
@@ -401,6 +418,8 @@
       $angleRange.value = angDeg;
       $deltaTop.value = deltaTop.toFixed(2);
       $deltaBottom.value = deltaBottom.toFixed(2);
+      $deltaTopRange.value = deltaTop;
+      $deltaBottomRange.value = deltaBottom;
 
       const pairAngleFromCuts = angleFromCuts(deltaTop, deltaBottom, b);
       const remainingTop = Math.max(b - deltaTop, 0);
@@ -419,7 +438,6 @@
       renderFront({
         b, sz, s, angDeg,
         deltaTop, deltaBottom,
-        cutMode,
         alphaTopDeg, alphaBottomDeg,
         tiltDirTop, tiltDirBottom
       });
@@ -451,7 +469,7 @@
 
           <div>وضع القص من الزاوية:</div><div class="text-right"><b>${cutModeText}</b></div>
 
-          <div>زاوية التجميع الهدف (مدخلة من الشريط):</div>
+          <div>زاوية التجميع الهدف (من الشريط):</div>
           <div class="text-right text-sky-300"><b>${angDeg.toFixed(2)}°</b></div>
 
           <div>قص الجناح العلوي لكل قطعة (Δ<sub>top</sub>):</div>
@@ -486,14 +504,13 @@
         </div>
         <div class="text-[10px] text-slate-400 mt-2">
           إذا كان Δtop = Δbottom بالضبط ⇒ الفرق = 0 ⇒ الزاوية الناتجة من القص ≈ 0° حتى لو أدخلت زاوية في الشريط.
-          الزاوية الحقيقية بعد اللحام تعتمد فقط على فرق القص بين الجناحين.
         </div>
       `;
     }
 
     function renderFront({
       b, sz, s, angDeg,
-      deltaTop, deltaBottom, cutMode,
+      deltaTop, deltaBottom,
       alphaTopDeg, alphaBottomDeg,
       tiltDirTop, tiltDirBottom
     }) {
@@ -571,12 +588,17 @@
     [$series, $size].forEach(el => el.addEventListener('input', () => { mode='angle'; calc(); }));
     $angle.addEventListener('input', () => { mode = 'angle'; calc(); });
     $angleRange.addEventListener('input', () => { mode = 'angle'; $angle.value = $angleRange.value; calc(); });
-    $deltaTop.addEventListener('input', () => { mode = 'cuts'; calc(); });
-    $deltaBottom.addEventListener('input', () => { mode = 'cuts'; calc(); });
+
+    $deltaTop.addEventListener('input', () => { mode = 'cuts'; $deltaTopRange.value = $deltaTop.value || 0; calc(); });
+    $deltaBottom.addEventListener('input', () => { mode = 'cuts'; $deltaBottomRange.value = $deltaBottom.value || 0; calc(); });
+    $deltaTopRange.addEventListener('input', () => { mode = 'cuts'; $deltaTop.value = $deltaTopRange.value; calc(); });
+    $deltaBottomRange.addEventListener('input', () => { mode = 'cuts'; $deltaBottom.value = $deltaBottomRange.value; calc(); });
+
     $alphaTop.addEventListener('input', () => calc());
     $alphaTopRange.addEventListener('input', () => { $alphaTop.value = $alphaTopRange.value; calc(); });
     $alphaBottom.addEventListener('input', () => calc());
     $alphaBottomRange.addEventListener('input', () => { $alphaBottom.value = $alphaBottomRange.value; calc(); });
+
     $cutWingsRadios.forEach(r => r.addEventListener('change', () => { mode = 'angle'; calc(); }));
 
     $btnReset.addEventListener('click', () => {
@@ -588,6 +610,8 @@
       $angleRange.value = 30;
       $deltaTop.value = 0;
       $deltaBottom.value = 0;
+      $deltaTopRange.value = 0;
+      $deltaBottomRange.value = 0;
       $alphaTop.value = 0;
       $alphaTopRange.value = 0;
       $alphaBottom.value = 0;
@@ -604,4 +628,4 @@
     calc();
   </script>
 </body>
-</html>
+  </html>
